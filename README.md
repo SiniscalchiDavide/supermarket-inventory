@@ -1,49 +1,79 @@
-# supermarket-inventory
-Scrivere in un commento qui sotto la composizione dei gruppi.
-Consegnare link al repository.
+# Supermarket - Inventory
 
-Traccia:
-Creare un'applicazione Angular che gestisca una lista di prodotti. L'applicazione dovrà utilizzare componenti, variabili con il decoratore @Input e array.
+## Consegna
+- Scrivere **nei commenti qui sotto** la composizione dei gruppi  
+- Consegnare il **link al repository** del progetto  
 
-Requisiti:
+---
 
-Struttura dell'applicazione
+## Obiettivo
+Realizzare un'applicazione **Angular** che gestisca una lista di prodotti, utilizzando:
+- Componenti  
+- Array di oggetti  
+- Comunicazione tra componenti tramite `@Input`  
 
-Creare un'applicazione Angular con almeno due componenti:
-ProductListComponent: mostra un elenco di prodotti.
-ProductDetailComponent: mostra i dettagli di un singolo prodotto selezionato.
+---
 
-Dati da gestire
-Creare un array di oggetti in ProductListComponent che rappresenti i prodotti.
-Ogni prodotto deve avere almeno i seguenti campi:
+## Struttura dell'applicazione
 
+Creare almeno **due componenti**:
+
+### 1. `ProductListComponent`
+- Mostra l'elenco dei prodotti  
+
+### 2. `ProductDetailComponent`
+- Mostra i dettagli del prodotto selezionato  
+
+---
+
+## Dati da gestire
+
+All'interno di `ProductListComponent`, creare un array di prodotti:
+
+```ts
 interface Product {
-
-name: string;
-
-price: number;
- 
-description: string;
-
+  name: string;
+  price: number;
+  description: string;
 }
+```
 
-L'array dovrà contenere almeno 5 prodotti iniziali.
+## Requisiti sui dati
+- L'array deve contenere **almeno 5 prodotti**
+- I dati possono essere **statici (hardcoded)**
 
-Visualizzazione dei prodotti
-ProductListComponent deve visualizzare l'elenco dei prodotti utilizzando *ngFor.
-Cliccando su un prodotto, i dettagli di quel prodotto devono essere mostrati nel ProductDetailComponent.
+---
 
-Utilizzo del decoratore @Input
-ProductDetailComponent deve ricevere tramite @Input i dati del prodotto selezionato da ProductListComponent.
+## Visualizzazione dei prodotti
+- Utilizzare `*ngFor` per iterare e mostrare la lista  
+- Ogni prodotto deve essere **cliccabile**  
 
-Interazione tra componenti
-Quando un utente clicca su un prodotto in ProductListComponent, quel prodotto deve essere passato a ProductDetailComponent per essere visualizzato.
+### Al click:
+- Mostrare i dettagli nel `ProductDetailComponent`  
 
-Stilizzazione
-Utilizzare Bootstrap (o CSS personalizzato) per rendere l'interfaccia più leggibile e gradevole.
-_________
-Aggiungere un pulsante "Elimina" accanto a ogni prodotto per rimuoverlo dalla lista.
-Consentire l'aggiunta di nuovi prodotti tramite un modulo.
-Mostrare un messaggio se nessun prodotto è selezionato in ProductDetailComponent.
-NB: utilizzare github, dichiarare di non poter lavorare perché qualcuno è assente comporterà valutazione pari a 1 per tutto il gruppo.
-Per l'interrogazione/presentazione bisognerà essere preparati su tutte le parti di codice, anche quelle scritte dagli altri.
+---
+
+## Comunicazione tra componenti
+
+### Utilizzo di `@Input`
+- `ProductDetailComponent` deve ricevere il prodotto selezionato tramite `@Input`  
+
+### Flusso:
+1. L’utente clicca un prodotto in `ProductListComponent`  
+2. Il prodotto selezionato viene passato al componente `ProductDetailComponent`  
+3. I dettagli vengono visualizzati  
+
+---
+
+## Stilizzazione
+
+### Tecnologie:
+- **Bootstrap**  
+  **oppure**  
+- CSS personalizzato  
+
+### Obiettivo:
+Rendere l’interfaccia:
+- Chiara  
+- Leggibile  
+- Gradevole  

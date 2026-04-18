@@ -1,0 +1,63 @@
+<div class="container">
+    <h1>{{ ls.getTesto('reg_titolo') }}</h1>
+    <h3>{{ ls.getTesto('reg_sottotitolo') }}</h3>
+    
+    <form (ngSubmit)="conferma()">
+        <div class="form-group">
+            <label for="name">{{ ls.getTesto('reg_nome') }}:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="formData.name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="cognome">{{ ls.getTesto('reg_cognome') }}:</label>
+            <input type="text" id="cognome" name="cognome" [(ngModel)]="formData.cognome" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="formData.email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="birthdate">{{ ls.getTesto('reg_data_nascita') }}:</label>
+            <input type="date" id="birthdate" name="birthdate" [(ngModel)]="formData.birthdate" required>
+        </div>
+
+        <div class="form-group radio-group">
+            <span class="label-title">{{ ls.getTesto('reg_genere') }}:</span>
+            <label class="radio-option">
+                <input type="radio" name="gender" value="Maschio" [(ngModel)]="formData.gender"> Maschio
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="gender" value="Femmina" [(ngModel)]="formData.gender"> Femmina
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="country">{{ ls.getTesto('reg_paese') }}:</label>
+            <select id="country" name="country" [(ngModel)]="formData.country" required>
+                <option value="">Seleziona...</option>
+                <option *ngFor="let p of paesi" [value]="p">{{ p }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="password">{{ ls.getTesto('login_pass') }}:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="formData.password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="conpassword">{{ ls.getTesto('reg_conferma_pass') }}:</label>
+            <input type="password" id="conpassword" name="conpassword" [(ngModel)]="formData.conpassword" required>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="terms" [(ngModel)]="formData.terms" required> 
+                {{ ls.getTesto('reg_termini') }}
+            </label>
+        </div>
+
+        <button type="submit">{{ ls.getTesto('reg_bottone') }}</button>
+    </form>
+</div>

@@ -1,0 +1,28 @@
+<div class="box">
+    <h2>{{ ls.getTesto('login_titolo') }}</h2>
+    
+    <form (ngSubmit)="accedi()">
+        <label for="username">{{ ls.getTesto('login_utente') }}</label>
+        <input 
+            id="username" 
+            name="username" 
+            type="text" 
+            [(ngModel)]="loginData.username" 
+            required>
+
+        <label for="password">{{ ls.getTesto('login_pass') }}</label>
+        <input 
+            id="password" 
+            name="password" 
+            type="password" 
+            [(ngModel)]="loginData.password" 
+            required>
+
+        <button type="submit">{{ ls.getTesto('login_bottone') }}</button>
+    </form>
+
+    <p>
+        {{ ls.getTesto('login_no_account') }} 
+        <a routerLink="/register">{{ ls.getTesto('nav_registrati') }}</a>
+    </p>
+</div>

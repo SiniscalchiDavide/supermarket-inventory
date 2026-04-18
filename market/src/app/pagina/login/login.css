@@ -1,0 +1,64 @@
+/* Contenitore centrale (il box delle immagini) */
+.box {
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 25px;
+    background-color: var(--bg-card); /* Usa la variabile per il tema */
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+/* Bottone Login - Colore Accento Market */
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    filter: brightness(1.2);
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}

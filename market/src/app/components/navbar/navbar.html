@@ -1,0 +1,49 @@
+<header>
+  <div class="brand">
+    <a routerLink="/">
+      <div class="logo-icon">🛒</div>
+    </a>
+    <div class="brand-text">
+      <strong>MARKET</strong>
+    </div>
+  </div>
+
+  <div class="nav-controls">
+    <a href="#" class="nav-btn-simple">Info</a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Selezioni ▼</button>
+      <div class="dropdown-content">
+        <a href="#">Cibo</a>
+        <a href="#">Selezione 2</a>
+        <a href="#">Selezione 3</a>
+        <a href="#">Selezione 4</a>
+      </div>
+    </div>
+
+    <div class="nav-auth">
+      <ng-container *ngIf="!isLogged">
+        <a routerLink="/login" class="nav-btn-simple">{{ ls.getTesto('nav_accedi') }}</a>
+        <a routerLink="/register" class="btn-registrati">{{ ls.getTesto('nav_registrati') }}</a>
+      </ng-container>
+
+      <button *ngIf="isLogged" (click)="logout()" class="btn-logout">
+        Esci
+      </button>
+    </div>
+
+    <button (click)="toggleTheme()" class="theme-toggle">
+      {{ isDark ? '☀️' : '🌙' }}
+    </button>
+
+    <div class="dropdown">
+      <button class="dropbtn">🌐 {{ ls.linguaAttuale().toUpperCase() }} ▼</button>
+      <div class="dropdown-content right-align">
+        <a (click)="ls.cambiaLingua('it')">🇮🇹 Italiano</a>
+        <a (click)="ls.cambiaLingua('en')">🇬🇧 English</a>
+        <a (click)="ls.cambiaLingua('zh')">🇨🇳 中文</a>
+        <a (click)="ls.cambiaLingua('tl')">🇵🇭 Tagalog</a>
+      </div>
+    </div>
+  </div>
+</header>

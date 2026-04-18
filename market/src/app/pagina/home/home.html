@@ -1,0 +1,48 @@
+<div class="home-container">
+
+  <section class="hero-carousel">
+    <button class="carousel-btn prev" (click)="prevSlide()">&#10094;</button>
+
+    <div class="slides-container">
+      <div class="slide" *ngFor="let slide of slides; let i = index" [class.active]="i === currentSlideIndex">
+        <img [src]="slide.imageUrl" [alt]="slide.title">
+        <div class="slide-text">
+          <h2>{{ slide.title }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-btn next" (click)="nextSlide()">&#10095;</button>
+  </section>
+
+
+  <section class="featured-sections">
+
+    <div class="featured-item left-img">
+      <div class="item-img rounded-img">
+        <img src="https://via.placeholder.com/300x200?text=Categoria" alt="Immagine Categoria">
+      </div>
+      <div class="item-text">
+        <h3>Nome Categoria</h3>
+        <p>Una breve descrizione accattivante per questa categoria di prodotti. Scopri di più.</p>
+      </div>
+    </div>
+
+    <div class="featured-item right-img">
+      <div class="item-text">
+        <h3>Offerta Speciale</h3>
+        <p>Non perderti questa incredibile offerta limitata nel tempo. Clicca qui!</p>
+      </div>
+      <div class="item-img rounded-img">
+        <img src="https://via.placeholder.com/300x200?text=Offerta" alt="Immagine Offerta">
+      </div>
+    </div>
+
+  </section>
+
+
+  <section class="bottom-actions">
+    <button class="btn-more">Carica Altro</button>
+  </section>
+
+</div>

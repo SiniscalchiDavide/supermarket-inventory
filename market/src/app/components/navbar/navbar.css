@@ -1,0 +1,119 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 25px;
+  background-color: var(--bg-card);
+  border-bottom: 2px solid var(--accent);
+  color: var(--text-color);
+}
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.nav-controls { display: flex; align-items: center; gap: 15px; }
+
+/* Pulsanti semplici (Info, Accedi) */
+.nav-btn-simple {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 8px 12px;
+}
+
+/* PULSANTE REGISTRATI - Fix visibilità modalità chiara */
+.btn-registrati {
+
+  color: var(--text-color);
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-registrati:hover {
+  filter: brightness(1.1);
+}
+
+/* STILE DROPDOWN */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-card);
+  min-width: 140px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+  z-index: 100;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.dropdown-content.right-align {
+  right: 0; /* Allinea la tendina della lingua a destra per non uscire dallo schermo */
+}
+
+.dropdown-content a {
+  color: var(--text-color);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0 10px;
+}
+.dropdown-content::before {
+  content: "";
+  position: absolute;
+  top: -12px; /* Copre il margin-top di 10px + un piccolo extra */
+  left: 0;
+  right: 0;
+  height: 12px;
+  background-color: transparent; /* Invisibile ma "solido" per il mouse */
+}
+
+/* STILE PULSANTE LOGOUT ROSSO */
+.btn-logout {
+  background-color: #dc3545; /* Rosso acceso */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #c82333; /* Rosso più scuro quando ci passi sopra */
+}

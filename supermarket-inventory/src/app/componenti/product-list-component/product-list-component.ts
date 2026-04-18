@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Product } from '../../product';
 import { CommonModule } from '@angular/common'; // Necessario per far funzionare *ngFor
+import { ProductDetailComponent } from '../product-detail-component/product-detail-component'
 @Component({
   selector: 'app-product-list-component',
-  imports: [CommonModule], //Per usare angular in html
+  imports: [CommonModule, ProductDetailComponent], //Per usare angular in html
   templateUrl: './product-list-component.html',
   styleUrl: './product-list-component.css',
 })

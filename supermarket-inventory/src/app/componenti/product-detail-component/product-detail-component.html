@@ -1,1 +1,28 @@
-<p>product-detail-component works!</p>
+<div *ngIf="prodotto" class="container mt-5"> 
+<!--*ngFor: È un ciclo,"Prendi questa lista di prodotti e crea una card per ognuno di essi"-->
+  
+  <div class="card border-pink shadow">
+    
+    <div class="card-header text-white" style="background-color: #e84898;">
+      <h3 class="mb-0">Dettaglio Prodotto: {{ prodotto.name }}</h3>
+    </div>
+
+    <div class="card-body">
+      
+      <p class="lead">{{ prodotto.description }}</p>
+      <!--Lead serve a dare importanza al testo, rende il font un po' più grande rispetto al testo normale-->
+      
+      <hr><!--"Horizontal Rule", crea una linea orizzontale sottile che attraversa la pagina-->
+
+      <div class="d-flex justify-content-between align-items-center">
+        <!--Attiva il sistema "Flexbox", serve a gestire la posizione degli elementi dentro un contenitore-->
+        <span class="badge bg-secondary">ID Prodotto: {{ prodotto.id }}</span>
+        
+        <h4 class="text-danger mb-0 fw-bold">Prezzo: {{ prodotto.price }} €</h4>
+        <!--fw-bold "Font Weight Bold", serve a mettere il testo in grassetto-->
+      </div>
+      
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,9 @@
+/* Definiamo il colore rosa personalizzato per il bordo della card */
+.border-pink {
+    border: 2px solid #e84898 !important;
+}
+
+/*aggiungiamo un po' di transizione per rendere l'apparizione più fluida */
+.card {
+    transition: all 0.3s ease-in-out;
+}

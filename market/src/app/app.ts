@@ -29,7 +29,8 @@
   ✓ Tema dinamico globale
 */
 
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 import { NavbarComponent } from '../app/components/navbar/navbar';
@@ -42,7 +43,15 @@ import { NavbarComponent } from '../app/components/navbar/navbar';
 })
 export class App implements OnInit {
   protected readonly title = signal('market');
+  private platformId = inject(PLATFORM_ID);
   
   ngOnInit() {
-    // Carica il tema salvato al caricamento della pagina
-    const temaScuro = localStorage.getItem('darkMode') === 'true';\n    if (temaScuro) {\n      document.body.classList.add('dark-mode');\n    }\n  }\n}
+    // Carica il tema salvato al caricamento della pagina (solo in browser)
+    if (isPlatformBrowser(this.platformId)) {
+      const temaScuro = localStorage.getItem('darkMode') === 'true';
+      if (temaScuro) {
+        document.body.classList.add('dark-mode');
+      }
+    }
+  }
+}

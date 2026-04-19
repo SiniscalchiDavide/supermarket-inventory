@@ -1,9 +1,13 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinguaService {
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
+
   // Signal per gestire la lingua corrente (default 'it')
   linguaAttuale = signal<'it' | 'en' | 'zh' | 'tl'>(this.caricaLingua());
 
@@ -148,22 +152,29 @@ export class LinguaService {
   };
 
   constructor() {
-    // Carica la lingua salvata al primo accesso
-    const linguaSalvata = localStorage.getItem('lingua') as 'it' | 'en' | 'zh' | 'tl' | null;
-    if (linguaSalvata) {
-      this.linguaAttuale.set(linguaSalvata);
+    // Carica la lingua salvata al primo accesso (solo in browser)
+    if (this.isBrowser) {
+      const linguaSalvata = localStorage.getItem('lingua') as 'it' | 'en' | 'zh' | 'tl' | null;
+      if (linguaSalvata) {
+        this.linguaAttuale.set(linguaSalvata);
+      }
     }
   }
 
   private caricaLingua(): 'it' | 'en' | 'zh' | 'tl' {
-    const lingua = localStorage.getItem('lingua');
-    return (lingua as any) || 'it';
+    if (this.isBrowser) {
+      const lingua = localStorage.getItem('lingua');
+      return (lingua as any) || 'it';
+    }
+    return 'it';
   }
 
   // Funzione per cambiare lingua
   cambiaLingua(nuovaLingua: 'it' | 'en' | 'zh' | 'tl') {
     this.linguaAttuale.set(nuovaLingua);
-    localStorage.setItem('lingua', nuovaLingua);
+    if (this.isBrowser) {
+      localStorage.setItem('lingua', nuovaLingua);
+    }
   }
 
   linguaCorrente(): 'it' | 'en' | 'zh' | 'tl' {

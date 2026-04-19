@@ -3,9 +3,16 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 12px 25px;
-  background-color: var(--bg-card);
-  border-bottom: 2px solid var(--accent);
-  color: var(--text-color);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--border-light);
+  color: var(--text-main);
+  box-shadow: var(--shadow-light);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -14,26 +21,36 @@ header {
 /* Pulsanti semplici (Info, Accedi) */
 .nav-btn-simple {
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--text-main);
   font-weight: 500;
   padding: 8px 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-btn-simple:hover {
+  color: var(--accent-primary);
+  transform: translateY(-2px);
 }
 
 /* PULSANTE REGISTRATI - Fix visibilità modalità chiara */
 .btn-registrati {
-
-  color: var(--text-color);
+  background: var(--accent-gradient);
+  color: white;
   padding: 10px 20px;
-  border-radius: 6px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: bold;
   border: none;
   display: inline-block;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(232, 72, 152, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-registrati:hover {
-  filter: brightness(1.1);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(232, 72, 152, 0.4);
 }
 
 /* STILE DROPDOWN */
@@ -43,41 +60,58 @@ header {
 }
 
 .dropbtn {
-  background-color: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
   padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.dropbtn:hover {
+  background: rgba(232, 72, 152, 0.15);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 15px rgba(232, 72, 152, 0.2);
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: var(--bg-card);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   min-width: 140px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-light);
   z-index: 100;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
   margin-top: 5px;
+  padding: 5px 0;
 }
 
 .dropdown-content.right-align {
-  right: 0; /* Allinea la tendina della lingua a destra per non uscire dallo schermo */
+  right: 0;
 }
 
 .dropdown-content a {
-  color: var(--text-color);
+  color: var(--text-main);
   padding: 10px 15px;
   text-decoration: none;
   display: block;
   font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .dropdown-content a:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(232, 72, 152, 0.15);
+  color: var(--accent-primary);
+  padding-left: 18px;
 }
 
 .dropdown:hover .dropdown-content {
@@ -85,11 +119,23 @@ header {
 }
 
 .theme-toggle {
-  background: none;
-  border: none;
-  font-size: 1.4rem;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 0 10px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.theme-toggle:hover {
+  background: rgba(232, 72, 152, 0.15);
+  border-color: var(--accent-primary);
+  transform: rotate(20deg) scale(1.1);
+  box-shadow: 0 4px 15px rgba(232, 72, 152, 0.2);
 }
 .dropdown-content::before {
   content: "";
@@ -103,17 +149,23 @@ header {
 
 /* STILE PULSANTE LOGOUT ROSSO */
 .btn-logout {
-  background-color: #dc3545; /* Rosso acceso */
+  background: linear-gradient(135deg, #ff6b6b, #dc3545);
   color: white;
   padding: 8px 16px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255, 107, 107, 0.3);
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+  transition: all 0.3s ease;
 }
 
 .btn-logout:hover {
-  background-color: #c82333; /* Rosso più scuro quando ci passi sopra */
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.btn-logout:active {
+  transform: scale(0.98);
 }

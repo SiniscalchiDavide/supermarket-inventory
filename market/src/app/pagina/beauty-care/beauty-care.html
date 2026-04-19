@@ -1,12 +1,14 @@
 <div class="container py-5">
   <div class="text-center mb-5">
-    <h1 class="display-4 fw-bold" style="color: #e84898;">Beauty & Care Store</h1>
-    <p class="lead text-muted">Scopri la tua bellezza con i nostri prodotti premium.</p>
+    <h1 class="display-4 fw-bold" style="color: #e84898;">{{ ls.getTesto('beauty_title') }}</h1>
+    <p class="lead text-muted">{{ ls.getTesto('beauty_subtitle') }}</p>
   </div>
 
   <app-product-list-component 
-    [titolo]="'Reparto Beauty & Care'"
+    [titolo]="'beauty_section'"
     [categorie]="categorieBeauty"
-    [prodotti]="listaBeauty">
+    [prodotti]="listaBeauty"
+    [coloreTema]="'#e84898'"
+    [coloreSfondo]="'#fff0f5'">
   </app-product-list-component>
 </div>

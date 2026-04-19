@@ -12,6 +12,7 @@
 import { Component } from '@angular/core';
 import { Product } from '../../product'; // Assicurati che il percorso sia corretto
 import { ProductListComponent } from '../../components/product-list-component/product-list-component';
+import { LinguaService } from '../../lingua';
 
 @Component({
   selector: 'app-food-page',
@@ -23,6 +24,8 @@ export class FoodPageComponent {
   
   // 1. Definiamo le categorie per i bottoni in alto
   categorieCibo: string[] = ['Dispensa', 'Fresco', 'Snack e Dolci', 'Bevande'];
+
+  constructor(public ls: LinguaService) {}
 
   // 2. Creiamo l'array di prodotti per il cibo
   listaCibo: Product[] = [

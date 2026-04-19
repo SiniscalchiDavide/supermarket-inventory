@@ -1,12 +1,14 @@
 <div class="container py-5">
   <div class="text-center mb-5">
-    <h1 class="display-4 fw-bold" style="color: #e84898;">Gourmet Market</h1>
-    <p class="lead text-muted">La migliore selezione di prodotti per la tua tavola.</p>
+    <h1 class="display-4 fw-bold" style="color: #228B22;">{{ ls.getTesto('food_title') }}</h1>
+    <p class="lead text-muted">{{ ls.getTesto('food_subtitle') }}</p>
   </div>
 
   <app-product-list-component 
-    [titolo]="'Il nostro assortimento Food'"
+    [titolo]="'food_section'"
     [categorie]="categorieCibo"
-    [prodotti]="listaCibo">
+    [prodotti]="listaCibo"
+    [coloreTema]="'#228B22'"
+    [coloreSfondo]="'#f0fde8'">
   </app-product-list-component>
 </div>

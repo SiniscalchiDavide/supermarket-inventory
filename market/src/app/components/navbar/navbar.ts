@@ -37,10 +37,12 @@ export class NavbarComponent {
   }
 
   private applicaTema() {
-    if (this.isDark) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
+    if (this.isBrowser) {
+      if (this.isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
     }
   }
 

@@ -48,7 +48,51 @@ export class LinguaService {
       reg_termini: 'Accetta i termini e le condizioni',
       reg_bottone: 'Registrati',
       reg_gia_account: 'Hai già un account?',
-      reg_errore_termini: 'Devi accettare i termini per continuare'
+      reg_errore_termini: 'Devi accettare i termini per continuare',
+      // Pagina Food
+      food_title: 'Gourmet Market',
+      food_subtitle: 'La migliore selezione di prodotti per la tua tavola.',
+      food_section: 'Il nostro assortimento Food',
+      // Pagina Beauty
+      beauty_title: 'Beauty & Care Store',
+      beauty_subtitle: 'Scopri la tua bellezza con i nostri prodotti premium.',
+      beauty_section: 'Reparto Beauty & Care',
+      // Prodotti Food - Dispensa
+      prod_pasta: 'Pasta Integrale 500g',
+      prod_pasta_desc: 'Trafilata al bronzo, 100% grano italiano.',
+      prod_riso: 'Riso Basmati',
+      prod_riso_desc: 'Chicchi lunghi e profumati, ideale per contorni.',
+      prod_passata: 'Passata di Pomodoro',
+      prod_passata_desc: 'Pomodoro San Marzano, densa e dolce.',
+      // Prodotti Food - Fresco
+      prod_yogurt: 'Yogurt Greco Bianco',
+      prod_yogurt_desc: 'Senza grassi, ricco di proteine.',
+      prod_mozzarella: 'Mozzarella di Bufala',
+      prod_mozzarella_desc: 'Freschissima, da latte di bufala campana.',
+      // Prodotti Food - Snack
+      prod_biscotti: 'Biscotti alla Nocciola',
+      prod_biscotti_desc: 'Con granella di nocciole tostate.',
+      prod_cioccolato: 'Cioccolato Fondente 85%',
+      prod_cioccolato_desc: 'Cacao pregiato, gusto intenso.',
+      // Prodotti Food - Bevande
+      prod_succo: 'Succo di Mela Bio',
+      prod_succo_desc: '100% mela, senza zuccheri aggiunti.',
+      prod_matcha: 'Tè Verde Matcha',
+      prod_matcha_desc: 'In polvere, ricco di antiossidanti.',
+      // Prodotti Beauty - Skincare
+      prod_gel: 'Gel Detergente Purificante',
+      prod_gel_desc: 'Rimuove le impurità e detergente profondo.',
+      prod_tonico: 'Tonico Illuminante AHA',
+      prod_tonico_desc: 'Esfolia delicatamente e illumina.',
+      // Prodotti Beauty - Haircare
+      prod_shampoo: 'Shampoo Protettivo Colore',
+      prod_shampoo_desc: 'Mantiene la brillantezza del colore.',
+      // Prodotti Beauty - Make-up
+      prod_fondotinta: 'Fondotinta Fluido Idratante',
+      prod_fondotinta_desc: 'Coprenza media con effetto naturale.',
+      // Prodotti Beauty - Men's Grooming
+      prod_olio_barba: 'Olio Barba Ammorbidente',
+      prod_olio_barba_desc: 'Idrata la pelle sottostante.'
     },
     'en': {
       nav_home: 'Home',
@@ -81,7 +125,51 @@ export class LinguaService {
       reg_termini: 'I accept the terms and conditions',
       reg_bottone: 'Sign Up',
       reg_gia_account: 'Already have an account?',
-      reg_errore_termini: 'You must accept the terms to continue'
+      reg_errore_termini: 'You must accept the terms to continue',
+      // Food Page
+      food_title: 'Gourmet Market',
+      food_subtitle: 'The best selection of products for your table.',
+      food_section: 'Our Food Assortment',
+      // Beauty Page
+      beauty_title: 'Beauty & Care Store',
+      beauty_subtitle: 'Discover your beauty with our premium products.',
+      beauty_section: 'Beauty & Care Department',
+      // Food Products - Pantry
+      prod_pasta: 'Whole Wheat Pasta 500g',
+      prod_pasta_desc: 'Bronze drawn, 100% Italian wheat.',
+      prod_riso: 'Basmati Rice',
+      prod_riso_desc: 'Long and fragrant grains, ideal for side dishes.',
+      prod_passata: 'Tomato Sauce',
+      prod_passata_desc: 'San Marzano tomato, dense and sweet.',
+      // Food Products - Fresh
+      prod_yogurt: 'White Greek Yogurt',
+      prod_yogurt_desc: 'Fat-free, rich in proteins.',
+      prod_mozzarella: 'Buffalo Mozzarella',
+      prod_mozzarella_desc: 'Very fresh, from Campania buffalo milk.',
+      // Food Products - Snacks
+      prod_biscotti: 'Hazelnut Biscuits',
+      prod_biscotti_desc: 'With roasted hazelnut granules.',
+      prod_cioccolato: 'Dark Chocolate 85%',
+      prod_cioccolato_desc: 'Premium cocoa, intense taste.',
+      // Food Products - Beverages
+      prod_succo: 'Bio Apple Juice',
+      prod_succo_desc: '100% apple, no added sugars.',
+      prod_matcha: 'Matcha Green Tea',
+      prod_matcha_desc: 'Powder form, rich in antioxidants.',
+      // Beauty Products - Skincare
+      prod_gel: 'Purifying Cleansing Gel',
+      prod_gel_desc: 'Removes impurities and deep cleanse.',
+      prod_tonico: 'Illuminating AHA Tonic',
+      prod_tonico_desc: 'Gently exfoliates and illuminates.',
+      // Beauty Products - Haircare
+      prod_shampoo: 'Color Protective Shampoo',
+      prod_shampoo_desc: 'Maintains color brilliance.',
+      // Beauty Products - Make-up
+      prod_fondotinta: 'Hydrating Fluid Foundation',
+      prod_fondotinta_desc: 'Medium coverage with natural effect.',
+      // Beauty Products - Men's Grooming
+      prod_olio_barba: 'Beard Softening Oil',
+      prod_olio_barba_desc: 'Hydrates the underlying skin.'
     },
     'zh': {
       nav_home: '首页',
@@ -114,7 +202,51 @@ export class LinguaService {
       reg_termini: '我接受条款和条件',
       reg_bottone: '立即注册',
       reg_gia_account: '已有账号？',
-      reg_errore_termini: '您必须接受条款才能继续'
+      reg_errore_termini: '您必须接受条款才能继续',
+      // 食品页面
+      food_title: '美食市场',
+      food_subtitle: '为您的餐桌精选最佳产品。',
+      food_section: '我们的食品分类',
+      // 美容页面
+      beauty_title: '美容护理专卖店',
+      beauty_subtitle: '通过我们的高级产品发现您的美丽。',
+      beauty_section: '美容护理部门',
+      // 食品产品 - 食品储藏室
+      prod_pasta: '全麦面食 500克',
+      prod_pasta_desc: '铜模制作，100% 意大利小麦。',
+      prod_riso: '印度香米',
+      prod_riso_desc: '长粒香米，理想的配菜。',
+      prod_passata: '番茄酱',
+      prod_passata_desc: '圣马扎诺番茄，浓郁香甜。',
+      // 食品产品 - 新鲜
+      prod_yogurt: '白色希腊酸奶',
+      prod_yogurt_desc: '无脂肪，富含蛋白质。',
+      prod_mozzarella: '水牛莫菲拉芝士',
+      prod_mozzarella_desc: '新鲜无比，来自坎帕尼亚水牛奶。',
+      // 食品产品 - 零食
+      prod_biscotti: '榛子饼干',
+      prod_biscotti_desc: '烘烤榛子粒。',
+      prod_cioccolato: '85% 黑巧克力',
+      prod_cioccolato_desc: '优质可可，浓郁口味。',
+      // 食品产品 - 饮料
+      prod_succo: '有机苹果汁',
+      prod_succo_desc: '100% 苹果，无添加糖。',
+      prod_matcha: '抹茶绿茶',
+      prod_matcha_desc: '粉末形式，富含抗氧化物。',
+      // 美容产品 - 护肤
+      prod_gel: '净化洁面啫喱',
+      prod_gel_desc: '去除杂质和深层清洁。',
+      prod_tonico: '亮肤 AHA 爽肤水',
+      prod_tonico_desc: '温和去角质并亮肤。',
+      // 美容产品 - 护发
+      prod_shampoo: '护色洗发水',
+      prod_shampoo_desc: '保持色泽闪亮。',
+      // 美容产品 - 彩妆
+      prod_fondotinta: '保湿液体粉底',
+      prod_fondotinta_desc: '中等遮瑕力，自然效果。',
+      // 美容产品 - 男士护理
+      prod_olio_barba: '胡须柔软油',
+      prod_olio_barba_desc: '滋润肌肤。'
     },
     'tl': {
       nav_home: 'Home',
@@ -147,7 +279,51 @@ export class LinguaService {
       reg_termini: 'Tinatanggap ko ang mga terms at conditions',
       reg_bottone: 'Mag-sign Up',
       reg_gia_account: 'May account ka na ba?',
-      reg_errore_termini: 'Kailangan mong tanggapin ang terms para magpatuloy'
+      reg_errore_termini: 'Kailangan mong tanggapin ang terms para magpatuloy',
+      // Food Page
+      food_title: 'Gourmet Market',
+      food_subtitle: 'Ang pinakamahusay na pagpili ng produkto para sa iyong mesa.',
+      food_section: 'Ang aming Food Assortment',
+      // Beauty Page
+      beauty_title: 'Beauty & Care Store',
+      beauty_subtitle: 'Tuklasin ang iyong kagandahan gamit ang aming premium na produkto.',
+      beauty_section: 'Beauty & Care Department',
+      // Food Products - Pantry
+      prod_pasta: 'Whole Wheat Pasta 500g',
+      prod_pasta_desc: 'Bronze drawn, 100% Italian na wheat.',
+      prod_riso: 'Basmati Rice',
+      prod_riso_desc: 'Mahabang at aromadong butil, perpekto para sa side dishes.',
+      prod_passata: 'Tomato Sauce',
+      prod_passata_desc: 'San Marzano tomato, dense at matamis.',
+      // Food Products - Fresh
+      prod_yogurt: 'White Greek Yogurt',
+      prod_yogurt_desc: 'Walang taba, mayaman sa proteins.',
+      prod_mozzarella: 'Buffalo Mozzarella',
+      prod_mozzarella_desc: 'Napakasariwa, mula sa Campania buffalo milk.',
+      // Food Products - Snacks
+      prod_biscotti: 'Hazelnut Biscuits',
+      prod_biscotti_desc: 'May toasted hazelnut granules.',
+      prod_cioccolato: 'Dark Chocolate 85%',
+      prod_cioccolato_desc: 'Premium cocoa, matinding lasa.',
+      // Food Products - Beverages
+      prod_succo: 'Bio Apple Juice',
+      prod_succo_desc: '100% apple, walang dagdag na asukal.',
+      prod_matcha: 'Matcha Green Tea',
+      prod_matcha_desc: 'Powder form, mayaman sa antioxidants.',
+      // Beauty Products - Skincare
+      prod_gel: 'Purifying Cleansing Gel',
+      prod_gel_desc: 'Nag-aalis ng mga dumi at malalim na paglilinis.',
+      prod_tonico: 'Illuminating AHA Tonic',
+      prod_tonico_desc: 'Malambot na nag-exfoliate at nag-liwanag.',
+      // Beauty Products - Haircare
+      prod_shampoo: 'Color Protective Shampoo',
+      prod_shampoo_desc: 'Pinapanatili ang kulay na kinang.',
+      // Beauty Products - Make-up
+      prod_fondotinta: 'Hydrating Fluid Foundation',
+      prod_fondotinta_desc: 'Medium coverage na may natural na epekto.',
+      // Beauty Products - Men's Grooming
+      prod_olio_barba: 'Beard Softening Oil',
+      prod_olio_barba_desc: 'Nag-hydrate ng pinakamalalim na balat.'
     }
   };
 

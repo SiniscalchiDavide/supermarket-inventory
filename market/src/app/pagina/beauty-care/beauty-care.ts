@@ -11,7 +11,8 @@
 
 import { Component } from '@angular/core';
 import { Product } from '../../product';
-import { ProductListComponent } from '../../components/product-list-component/product-list-component'; // Controlla il percorso!
+import { ProductListComponent } from '../../components/product-list-component/product-list-component';
+import { LinguaService } from '../../lingua'; // Controlla il percorso!
 
 @Component({
   selector: 'app-beauty-page',
@@ -22,6 +23,8 @@ import { ProductListComponent } from '../../components/product-list-component/pr
 export class BeautyCareComponent {
   // Passiamo i nomi delle categorie per far generare i bottoni
   categorieBeauty: string[] = ['Skincare', 'Haircare', 'Make-up', "Men's Grooming"];
+
+  constructor(public ls: LinguaService) {}
 
   // L'array originale che ha preparato la tua compagna
   listaBeauty: Product[] = [

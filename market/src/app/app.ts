@@ -49,7 +49,7 @@ export class App implements OnInit {
     // Carica il tema salvato al caricamento della pagina (solo in browser)
     if (isPlatformBrowser(this.platformId)) {
       const temaScuro = localStorage.getItem('darkMode') === 'true';
-      if (temaScuro) {
+      if (temaScuro && typeof document !== 'undefined') {
         document.body.classList.add('dark-mode');
       }
     }

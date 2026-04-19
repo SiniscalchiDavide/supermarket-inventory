@@ -15,17 +15,17 @@
   --text-secondary: #666666;
   --text-muted: #999999;
   
-  /* Colori Accento */
-  --accent-primary: #e84898;
-  --accent-light: #ff69b4;
-  --accent-gradient: linear-gradient(135deg, #e84898, #ff69b4);
+  /* Colori Accento - BLUE ESSELUNGA */
+  --accent-primary: #0046B4;
+  --accent-light: #1e5db8;
+  --accent-gradient: linear-gradient(135deg, #0046B4, #1e5db8);
   
   /* Bordi e Ombre */
-  --border-color: rgba(232, 72, 152, 0.2);
+  --border-color: rgba(0, 70, 180, 0.2);
   --border-light: rgba(255, 255, 255, 0.4);
   --shadow-light: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
   --shadow-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
-  --shadow-hover: 0 16px 48px 0 rgba(232, 72, 152, 0.2);
+  --shadow-hover: 0 16px 48px 0 rgba(0, 70, 180, 0.2);
 }
 
 /* Variabili per il Tema Scuro */
@@ -40,17 +40,17 @@ body.dark-mode {
   --text-secondary: #b0b0b0;
   --text-muted: #808080;
   
-  /* Colori Accento */
-  --accent-primary: #ff4d9e;
-  --accent-light: #ff85c0;
-  --accent-gradient: linear-gradient(135deg, #ff4d9e, #ff85c0);
+  /* Colori Accento - BLUE ESSELUNGA */
+  --accent-primary: #4a9fd8;
+  --accent-light: #6ab5e0;
+  --accent-gradient: linear-gradient(135deg, #4a9fd8, #6ab5e0);
   
   /* Bordi e Ombre */
-  --border-color: rgba(255, 77, 158, 0.3);
+  --border-color: rgba(74, 159, 216, 0.3);
   --border-light: rgba(255, 255, 255, 0.15);
   --shadow-light: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   --shadow-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  --shadow-hover: 0 16px 48px 0 rgba(255, 77, 158, 0.3);
+  --shadow-hover: 0 16px 48px 0 rgba(74, 159, 216, 0.3);
 }
 
 /* ============================================

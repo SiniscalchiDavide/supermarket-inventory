@@ -21,6 +21,7 @@ import { Product } from '../../product';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms'; 
 import { ProductDetailComponent } from '../product-detail-component/product-detail-component';
+import { LinguaService } from '../../lingua';
 
 @Component({
   selector: 'app-product-list-component',
@@ -46,11 +47,49 @@ export class ProductListComponent implements OnInit {
   // Modello per l'aggiunta
   nuovoProdotto: Product = { id: 0, name: '', price: 0, description: '', category: '' };
 
+  constructor(public ls: LinguaService) {}
+
   ngOnInit() {
     // All'avvio, imposta la prima categoria disponibile per il modulo di aggiunta
     if (this.categorie.length > 0) {
       this.nuovoProdotto.category = this.categorie[0];
     }
+  }
+
+  // Mappa dei nomi prodotto alle chiavi di traduzione
+  private produttTraduzioniMap: { [key: string]: string } = {
+    'Pasta Integrale 500g': 'prod_pasta',
+    'Riso Basmati': 'prod_riso',
+    'Passata di Pomodoro': 'prod_passata',
+    'Yogurt Greco Bianco': 'prod_yogurt',
+    'Mozzarella di Bufala': 'prod_mozzarella',
+    'Biscotti alla Nocciola': 'prod_biscotti',
+    'Cioccolato Fondente 85%': 'prod_cioccolato',
+    'Succo di Mela Bio': 'prod_succo',
+    'Tè Verde Matcha': 'prod_matcha',
+    'Gel Detergente Purificante': 'prod_gel',
+    'Tonico Illuminante AHA': 'prod_tonico',
+    'Shampoo Protettivo Colore': 'prod_shampoo',
+    'Fondotinta Fluido Idratante': 'prod_fondotinta',
+    'Olio Barba Ammorbidente': 'prod_olio_barba'
+  };
+
+  // Funzione per tradurre il nome del prodotto
+  tradurciNomeProdotto(nomeProdotto: string): string {
+    const chiaveTraduzione = this.produttTraduzioniMap[nomeProdotto];
+    if (chiaveTraduzione) {
+      return this.ls.getTesto(chiaveTraduzione);
+    }
+    return nomeProdotto;
+  }
+
+  // Funzione per tradurre la descrizione del prodotto
+  tradurciDescrizioneProdotto(nomeProdotto: string): string {
+    const chiaveTraduzione = this.produttTraduzioniMap[nomeProdotto];
+    if (chiaveTraduzione) {
+      return this.ls.getTesto(chiaveTraduzione + '_desc');
+    }
+    return '';
   }
 
   selezionaProdotto(p: Product): void {

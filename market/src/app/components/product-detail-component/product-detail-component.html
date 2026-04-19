@@ -1,7 +1,7 @@
 <div class="sticky-top" style="top: 20px;">
   
   <div *ngIf="prodotto; else vuoto" class="card border-pink shadow">
-    <div class="card-header text-white" style="background-color: #e84898;">
+    <div class="card-header text-white" style="background-color: var(--accent-primary);">
       <h4 class="mb-0">Dettaglio Prodotto</h4>
     </div>
     <div class="card-body">
@@ -20,7 +20,7 @@
   </div>
 
   <ng-template #vuoto>
-    <div class="alert shadow-sm text-center py-5" style="background-color: #fff0f5; border: 1px dashed #e84898; color: #e84898;">
+    <div class="alert shadow-sm text-center py-5" style="background-color: #f9f4f7; border: 1px dashed var(--accent-primary); color: var(--accent-primary);">
       <i class="fs-1 d-block mb-3">🛒</i>
       <h5>Nessun prodotto selezionato</h5>
       <p class="mb-0 text-dark">Clicca sul pulsante "Dettagli" di un prodotto per visualizzare la sua scheda completa.</p>

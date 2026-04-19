@@ -219,7 +219,7 @@ button:active, .btn:active {
 }
 
 .text-danger {
-  background: linear-gradient(135deg, #e84898, #ff1493);
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

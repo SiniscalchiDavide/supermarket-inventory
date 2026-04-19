@@ -4,9 +4,8 @@ import { Injectable, signal, computed } from '@angular/core';
   providedIn: 'root'
 })
 export class LinguaService {
-
   // Signal per gestire la lingua corrente (default 'it')
-  linguaAttuale = signal<'it' | 'en' | 'zh' | 'tl'>('it');
+  linguaAttuale = signal<'it' | 'en' | 'zh' | 'tl'>(this.caricaLingua());
 
   // Dizionario completo delle traduzioni
   private traduzioni: any = {
@@ -148,11 +147,27 @@ export class LinguaService {
     }
   };
 
-  constructor() { }
+  constructor() {
+    // Carica la lingua salvata al primo accesso
+    const linguaSalvata = localStorage.getItem('lingua') as 'it' | 'en' | 'zh' | 'tl' | null;
+    if (linguaSalvata) {
+      this.linguaAttuale.set(linguaSalvata);
+    }
+  }
+
+  private caricaLingua(): 'it' | 'en' | 'zh' | 'tl' {
+    const lingua = localStorage.getItem('lingua');
+    return (lingua as any) || 'it';
+  }
 
   // Funzione per cambiare lingua
   cambiaLingua(nuovaLingua: 'it' | 'en' | 'zh' | 'tl') {
     this.linguaAttuale.set(nuovaLingua);
+    localStorage.setItem('lingua', nuovaLingua);
+  }
+
+  linguaCorrente(): 'it' | 'en' | 'zh' | 'tl' {
+    return this.linguaAttuale();
   }
 
   // Funzione per ottenere il testo tradotto basato sulla chiave

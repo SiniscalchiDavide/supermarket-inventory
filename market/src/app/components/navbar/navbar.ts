@@ -11,9 +11,13 @@ import { LinguaService } from '../../lingua';
   styleUrls: ['./navbar.css']
 })
 export class NavbarComponent {
-  isDark = false;
+  isDark: boolean;
 
-  constructor(public ls: LinguaService, private router: Router) {}
+  constructor(public ls: LinguaService, private router: Router) {
+    // Carica il tema salvato
+    this.isDark = localStorage.getItem('darkMode') === 'true';
+    this.applicaTema();
+  }
 
   // Questo "getter" viene letto continuamente da Angular.
   // Controlla se nel browser c'è scritto che l'utente è loggato.
@@ -23,7 +27,16 @@ export class NavbarComponent {
 
   toggleTheme() {
     this.isDark = !this.isDark;
-    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', this.isDark.toString());
+    this.applicaTema();
+  }
+
+  private applicaTema() {
+    if (this.isDark) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
   }
 
   setLang(lang: 'it' | 'en' | 'zh' | 'tl') {

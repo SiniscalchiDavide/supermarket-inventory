@@ -1,0 +1,93 @@
+/* ============================================
+   LIQUID GLASS - GLASSMORPHISM STYLE
+   ProductDetailComponent - Supermarket Inventory
+   ============================================ */
+
+.border-pink {
+  border: 1.5px solid rgba(232, 72, 152, 0.4) !important;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card:hover {
+  box-shadow: 0 16px 48px 0 rgba(232, 72, 152, 0.2),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(232, 72, 152, 0.4);
+}
+
+.card-header {
+  background: linear-gradient(135deg, rgba(232, 72, 152, 0.6), rgba(255, 105, 180, 0.5)) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.alert {
+  background: rgba(255, 240, 245, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1.5px dashed rgba(232, 72, 152, 0.4) !important;
+  border-radius: 20px;
+  color: #e84898 !important;
+  box-shadow: 0 8px 32px 0 rgba(232, 72, 152, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.alert:hover {
+  box-shadow: 0 12px 40px 0 rgba(232, 72, 152, 0.15);
+  border-color: rgba(232, 72, 152, 0.6);
+  background: rgba(255, 240, 245, 0.45) !important;
+}
+
+.card-title {
+  background: linear-gradient(135deg, #e84898 0%, #ff69b4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  background: rgba(232, 72, 152, 0.3) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  border: 1px solid rgba(232, 72, 152, 0.4);
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+}
+
+.text-danger {
+  background: linear-gradient(135deg, #e84898, #ff1493);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sticky-top {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.shadow {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+.shadow-sm {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}

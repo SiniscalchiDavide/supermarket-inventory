@@ -1,0 +1,13 @@
+.card {
+    height: 100%; /* Fa sì che tutte le card della stessa riga abbiano la stessa altezza */
+}
+
+.text-pink { color: #d63384; }
+.btn-outline-pink {
+  color: #d63384;
+  border-color: #d63384;
+}
+.btn-outline-pink:hover, .btn-outline-pink.active {
+  background-color: #d63384;
+  color: white;
+}

@@ -1,8 +1,17 @@
 <div class="container mt-4">
   <h2 class="mb-4" style="color: #e84898;">Reparto Beauty & Care</h2>
-
+  <div class="btn-group mb-4 w-100">
+    <button (click)="filtraCategoria('Tutti')" [class.active]="selectedCategory === 'Tutti'" class="btn btn-outline-pink">Tutti</button>
+    <button (click)="filtraCategoria('Skincare')" [class.active]="selectedCategory === 'Skincare'" class="btn btn-outline-pink">Skincare</button>
+    <button (click)="filtraCategoria('Haircare')" [class.active]="selectedCategory === 'Haircare'" class="btn btn-outline-pink">Haircare</button>
+    <button (click)="filtraCategoria('Make-up')" [class.active]="selectedCategory === 'Make-up'" class="btn btn-outline-pink">Make-up</button>
+    <button (click)="filtraCategoria('Men\'s Grooming')" [class.active]="selectedCategory === 'Men\'s Grooming'" class="btn btn-outline-pink">Uomo</button>
+  </div>
   <div class="row">
-    <div class="col-md-4 mb-3" *ngFor="let p of prodotti">
+  <ng-container *ngFor="let p of prodotti">
+    
+    <div class="col-md-4 mb-3" *ngIf="selectedCategory === 'Tutti' || p.category === selectedCategory">
+      
       <div class="card h-100 shadow-sm border-0" style="background-color: #fff0f5;">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title text-dark">{{ p.name }}</h5>
@@ -14,8 +23,10 @@
           </button>
         </div>
       </div>
+
     </div>
-  </div>
+  </ng-container>
+</div>
 
   <hr class="my-5">
     <app-product-detail-component [prodotto]="prodottoSelezionato"></app-product-detail-component>

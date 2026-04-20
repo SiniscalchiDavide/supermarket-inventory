@@ -1,3 +1,194 @@
-.brand-roman {
-  font-family: 'Times New Roman', Times, serif;
+/* 
+  NAVBAR STYLES
+  Contiene gli stili per la barra di navigazione principale, compresa la ricerca
+  Suddiviso in sezioni: overlay, search-input, dropdown, dark mode
+*/
+
+/* ===== OVERLAY BACKDROP ===== */
+/* Overlay opaco dietro il dropdown di ricerca per evidenziare il contenuto */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);     /* Opacità 40% per il filtro */
+  backdrop-filter: blur(4px);                /* Effetto blur sul resto della pagina */
+  -webkit-backdrop-filter: blur(4px);        /* Supporto browser webkit (Safari, Chrome) */
+  z-index: 1030;                             /* Sopra il contenuto ma sotto la ricerca */
+  pointer-events: auto;                      /* Permette i click sull'overlay */
+}
+
+/* ===== SEARCH BAR WRAPPER ===== */
+/* Contenitore principale della barra di ricerca */
+.search-wrapper {
+  z-index: 1051;                             /* Sopra l'overlay per essere cliccabile */
+  position: relative;
+}
+
+/* ===== SEARCH INPUT FIELD ===== */
+/* Input della ricerca: stile light mode */
+.search-input {
+  background-color: rgba(255, 255, 255, 0.95) !important;  /* Bianco semi-trasparente */
+  border: 1px solid var(--primary-accent) !important;      /* Bordo blu */
+  color: var(--text-dark) !important;                      /* Testo scuro */
+  transition: all 0.3s ease;                               /* Animazione smooth */
+  filter: none !important;                                 /* Senza blur */
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ===== SEARCH INPUT ANIMATION ===== */
+/* Animazione di apertura/chiusura dell'input */
+@keyframes searchBarSlideIn {
+  from {
+    opacity: 0;                  /* Invisibile all'inizio */
+    transform: scaleX(0);        /* Ridotta da destra */
+    transform-origin: right center;
+  }
+  to {
+    opacity: 1;                  /* Completamente visibile */
+    transform: scaleX(1);        /* Dimensione normale */
+    transform-origin: right center;
+  }
+}
+
+/* Applica l'animazione quando l'input appare */
+.search-input-animate {
+  animation: searchBarSlideIn 0.3s ease-out forwards;
+}
+
+/* ===== SEARCH INPUT DARK MODE ===== */
+/* Stili per l'input ricerca in tema scuro (massima specificità) */
+.search-wrapper .search-input.search-input-dark {
+  background-color: #1a1d23 !important;      /* Sfondo scuro */
+  color: white !important;                   /* Testo bianco */
+  border-color: var(--primary-accent) !important;
+  caret-color: white !important;             /* Cursore bianco per visibilità */
+}
+
+/* Placeholder text in dark mode */
+.search-wrapper .search-input.search-input-dark::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;  /* Bianco semi-trasparente */
+}
+
+/* Stato focus in dark mode */
+.search-wrapper .search-input.search-input-dark:focus {
+  background-color: #212529 !important;      /* Leggermente più chiaro al focus */
+  color: white !important;
+  border-color: var(--primary-accent) !important;
+  caret-color: white !important;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3) !important;  /* Glow blu al focus */
+}
+
+/* ===== SEARCH INPUT FOCUS (LIGHT MODE) ===== */
+/* Stato focus per l'input in light mode */
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3) !important;  /* Glow blu */
+  background-color: white !important;
+  filter: none !important;
+}
+
+/* Placeholder text in light mode */
+.search-input::placeholder {
+  color: var(--text-light);                  /* Grigio per il placeholder */
+}
+
+/* ===== SEARCH DROPDOWN CONTAINER ===== */
+/* Contenitore principale del dropdown dei risultati */
+.search-dropdown {
+  top: 100%;                    /* Posizionato sotto l'input */
+  left: 0;
+  width: 350px;                 /* Larghezza fissa */
+  margin-top: 8px;              /* Spazio tra input e dropdown */
+  border-radius: 8px;           /* Angoli arrotondati */
+  z-index: 1050;                /* Sopra il contenuto */
+}
+
+/* ===== SEARCH RESULTS LIST ===== */
+/* Lista contenente i risultati di ricerca */
+.search-results-list {
+  background: rgba(255, 255, 255, 0.75);    /* Bianco semi-trasparente */
+  border: 1px solid var(--border-color);    /* Bordo sottile */
+  border-radius: 8px;                       /* Angoli arrotondati */
+  backdrop-filter: blur(10px);              /* Effetto blur dietro */
+  -webkit-backdrop-filter: blur(10px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ===== SEARCH RESULT ITEM (SINGLE RESULT) ===== */
+/* Stile per ogni singolo risultato nel dropdown */
+.search-result-item {
+  cursor: pointer;                           /* Indica che è cliccabile */
+  transition: all 0.2s ease;                /* Animazione smooth al hover */
+  background-color: var(--bg-secondary);    /* Sfondo principale */
+}
+
+/* Hover effect: cambia colore di sfondo */
+.search-result-item:hover {
+  background-color: var(--bg-tertiary);     /* Sfondo più scuro/evidenziato */
+}
+
+/* Primo elemento: arrotonda angoli superiori */
+.search-result-item:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+/* Ultimo elemento: arrotonda angoli inferiori (se non è il pulsante "Vedi altri") */
+.search-result-item:last-of-type:not(.btn-outline-primary) {
+  border-radius: 0 0 8px 8px;
+}
+
+/* ===== DARK MODE STYLES ===== */
+
+/* Lista risultati in dark mode */
+[data-bs-theme='dark'] .search-results-list {
+  background: linear-gradient(180deg, #1a1d23 0%, #212529 100%);  /* Gradiente scuro */
+  border: 1px solid rgba(0, 123, 255, 0.3);                       /* Bordo blu scuro */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Singolo risultato in dark mode */
+[data-bs-theme='dark'] .search-result-item {
+  background-color: transparent;              /* Sfondo trasparente */
+  color: #e9ecef;                             /* Testo grigio chiaro */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);  /* Separatore sottile */
+  transition: all 0.2s ease;
+}
+
+/* Rimuove il separatore dall'ultimo elemento */
+[data-bs-theme='dark'] .search-result-item:last-child {
+  border-bottom: none;
+}
+
+/* Hover effect in dark mode: sfondo leggermente blu */
+[data-bs-theme='dark'] .search-result-item:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Testo forte (nome del risultato) in dark mode */
+[data-bs-theme='dark'] .search-result-item strong {
+  color: white;                               /* Bianco per il nome */
+}
+
+/* Testo muted (descrizione) in dark mode */
+[data-bs-theme='dark'] .search-result-item .text-muted {
+  color: rgba(255, 255, 255, 0.5) !important;  /* Grigio semi-trasparente */
+}
+
+/* ===== "VEDIaltri" BUTTON - DARK MODE ===== */
+/* Stile del pulsante "Vedi altri" in dark mode */
+[data-bs-theme='dark'] .btn-outline-primary {
+  color: var(--primary-accent);               /* Testo blu */
+  border-color: rgba(0, 123, 255, 0.3);      /* Bordo blu scuro */
+}
+
+/* Hover del pulsante "Vedi altri" in dark mode */
+[data-bs-theme='dark'] .btn-outline-primary:hover {
+  background-color: rgba(0, 123, 255, 0.1);  /* Sfondo blu scuro */
+  border-color: var(--primary-accent);        /* Bordo blu pieno */
 }

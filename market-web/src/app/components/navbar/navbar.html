@@ -1,57 +1,160 @@
+<!-- 
+  NAVBAR PRINCIPALE
+  Struttura: 
+  - SINISTRA: Brand (Market) + Link di navigazione (Catalogo + Sezioni)
+  - DESTRA: Ricerca + Tema + Lingua + Accedi/Esci
+  Sticky: fixed-top per rimanere visibile durante lo scroll
+-->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top px-3">
   <div class="container-fluid">
-    <!-- Brand che funge da home link -->
+    <!-- LOGO/BRAND - Cliccabile per tornare alla home -->
     <a class="navbar-brand fw-bold mb-0 h1 fs-4 brand-roman" routerLink="/" (click)="scrollToTop()" style="cursor: pointer;">Market</a>
     
-    <!-- Separatore SOLO tra Market e link principali -->
+    <!-- SEPARATORE VISIVO tra il brand e i link (visibile solo su desktop) -->
     <span class="nav-separator mx-2 d-none d-lg-block">|</span>
 
+    <!-- PULSANTE TOGGLE MENU (visibile solo su mobile) -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     
+    <!-- MENU COLLAPSIBILE (sinistra della navbar) -->
     <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Lista dei link principali -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
-        <!-- Componente Sezioni dentro la Navbar come dropdown (ora prima di Catalogo) -->
+        <!-- Componente Sezioni: mostra le categorie di prodotti (Alimentari, Giocattoli, etc.) -->
         <app-sezioni></app-sezioni>
 
-        <!-- Voci Navbar Principali -->
+        <!-- Link Catalogo: accede alla pagina principale dei prodotti -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/info" routerLinkActive="active">Catalogo</a>
         </li>
       </ul>
 
-      <!-- Sezione Destra (Pulsanti destri, icone utente) -->
+      <!-- SEZIONE DESTRA (Pulsanti, icone, menu utente) -->
       <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0 flex-wrap">
         
-        <!-- d. Icona Ricerca (Finta ma esteticamente valida per un e-commerce) -->
-        <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
-                style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
-                aria-label="Cerca">
-          <i class="bi bi-search"></i>
-        </button>
+        <!-- ===== BARRA DI RICERCA ===== 
+             Comprende: Input di testo (mostra/nascondi) + Pulsante icona + Dropdown risultati
+             Stato: controllato da isSearchOpen (BehaviorSubject)
+        -->
+        <div class="search-wrapper position-relative">
+          <div class="d-flex align-items-center gap-2">
+            <!-- 
+              INPUT RICERCA: 
+              - Visibile solo quando isSearchOpen è true
+              - ngModel per two-way binding
+              - (input) per rilevare modifiche in tempo reale
+              - Dark mode support con ngClass dinamico
+            -->
+            <input 
+              #searchInput
+              *ngIf="isSearchOpen"
+              type="text" 
+              class="form-control search-input search-input-animate" 
+              placeholder="Cerca pagine o prodotti..." 
+              [(ngModel)]="searchQuery"
+              (input)="onSearchInput()"
+              [ngClass]="{ 'search-input-dark': isDarkTheme() }"
+              style="width: 200px; height: 40px; border-radius: 20px;">
+            
+            <!-- 
+              PULSANTE RICERCA:
+              - Sempre visibile (icona lente)
+              - Click apre/chiude l'input di ricerca
+              - Stile: bottone circolare con icon-blur
+            -->
+            <button 
+              class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
+              style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
+              (click)="openSearch()"
+              aria-label="Cerca">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
 
-        <!-- e. Icona Carrello (Finta) -->
+          <!-- 
+            DROPDOWN RISULTATI RICERCA:
+            - Appare solo quando: isSearchOpen=true E displayedResults non è vuoto
+            - Mostra massimo 5 risultati per pagina con scrollbar
+            - Ogni risultato è un bottone cliccabile
+          -->
+          <div class="search-dropdown position-absolute" *ngIf="isSearchOpen && displayedResults.length > 0">
+            <div class="search-results-list shadow-lg" style="max-height: 300px; overflow-y: auto;">
+              <!-- Loop su ogni risultato visualizzato -->
+              <button 
+                *ngFor="let result of displayedResults" 
+                type="button"
+                class="search-result-item w-100 text-start px-3 py-2 border-0"
+                (click)="selectResult(result)">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <!-- Nome del risultato + badge tipo (Pagina o Prodotto) -->
+                    <strong>{{ result.name }}</strong>
+                    <span *ngIf="result.type === 'page'" class="badge bg-info ms-2">Pagina</span>
+                    <span *ngIf="result.type === 'product'" class="badge bg-warning ms-2">Prodotto</span>
+                  </div>
+                </div>
+                <!-- Descrizione (solo per prodotti) -->
+                <small class="text-muted" *ngIf="result.description">{{ result.description }}</small>
+              </button>
+              
+              <!-- 
+                PULSANTE VEDI ALTRI:
+                - Appare solo se hasMoreResults() ritorna true
+                - Accumula altri risultati sullo scroll
+              -->
+              <button 
+                *ngIf="hasMoreResults()"
+                type="button"
+                class="w-100 btn btn-sm btn-outline-primary border-top rounded-0 py-2"
+                (click)="loadMore()">
+                Vedi altri
+              </button>
+            </div>
+          </div>
+
+          <!-- MESSAGGIO NESSUN RISULTATO: mostrato quando non ci sono corrispondenze -->
+          <div class="search-dropdown position-absolute" *ngIf="isSearchOpen && searchQuery.trim() !== '' && displayedResults.length === 0">
+            <div class="search-results-list shadow-lg px-3 py-2" style="min-width: 250px;">
+              <p class="text-muted mb-0">Nessun risultato trovato per "{{ searchQuery }}"</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ICONA CARRELLO (attualmente finta, non funzionante) 
+             - Design e-commerce standard con badge numerico rosso
+             - Badge mostra il numero di articoli (attualmente hardcoded a 0)
+        -->
         <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center position-relative" 
                 style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
                 aria-label="Carrello">
           <i class="bi bi-cart3"></i>
-          <!-- Badge numerico del carrello (design pattern classico e-commerce) -->
+          <!-- Badge numerico (classico pattern e-commerce) -->
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
             0
             <span class="visually-hidden">prodotti nel carrello</span>
           </span>
         </button>
 
-        <!-- b. Pulsante toggle tema -->
+        <!-- PULSANTE TEMA (Giorno/Notte)
+             - Click su toggleTheme() per commutare light/dark mode
+             - Icona cambia da sole a luna a seconda dello stato
+             - Tema persistito in localStorage
+        -->
         <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
                 style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
                 (click)="toggleTheme()" 
                 aria-label="Cambia tema">
+          <!-- Icona dinamica: sole per light mode, luna per dark mode -->
           <i class="bi" [ngClass]="isDarkTheme() ? 'bi-moon-stars-fill' : 'bi-brightness-high-fill'"></i>
         </button>
 
-        <!-- c. Pulsante lingua dropdown -->
+        <!-- DROPDOWN LINGUA (Italiano/English)
+             - Custom dropdown con Bootstrap data-bs-toggle
+             - Attualmente solo per show (non cambia veramente la lingua)
+             - Check icon mostra la lingua selezionata
+        -->
         <div class="dropdown custom-dropdown-wrapper">
           <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
                   type="button" 
@@ -62,15 +165,20 @@
                   aria-label="Seleziona lingua">
             <i class="bi bi-globe"></i>
           </button>
+          <!-- Menu dropdown con opzioni lingua -->
           <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="languageDropdown">
             <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="$event.preventDefault()">
-              <span>Italiano</span> <i class="bi bi-check" style="color: var(--primary-accent);"></i>
+              <span>Italiano</span> 
+              <i class="bi bi-check" style="color: var(--primary-accent);"></i>
             </a></li>
             <li><a class="dropdown-item" href="#" (click)="$event.preventDefault()">English</a></li>
           </ul>
         </div>
 
-        <!-- a. Pulsante Accedi / Registrati (spostato a destra) o Esci (se loggato) -->
+        <!-- PULSANTE ACCEDI/REGISTRATI o ESCI 
+             - Condizionale: mostra "Accedi" se NON loggato, "Esci" se loggato
+             - Colori diversi: primary (accedi) vs danger (esci)
+        -->
         <button *ngIf="!isLoggedIn()" class="btn btn-primary" routerLink="/login">Accedi / Registrati</button>
         <button *ngIf="isLoggedIn()" class="btn btn-danger" (click)="logout()">Esci</button>
       </div>

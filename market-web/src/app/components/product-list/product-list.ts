@@ -1,97 +1,129 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
 import { ProductDetail } from '../product-detail/product-detail';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
+// Componente principale che visualizza la lista di prodotti e gestisce il form di aggiunta
 @Component({
   selector: 'app-product-list',
   imports: [CommonModule, ReactiveFormsModule, ProductDetail],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
-  // OnPush dice ad Angular di ricalcolare l'HTML solo se cambiano gli input (props) dall'esterno, 
-  // oppure se scatta un evento o un observable. Fa andare l'app molto più veloce.
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush  // Ottimizzazione: rileva cambiamenti solo su input/eventi
 })
 export class ProductList implements OnInit {
-  // inject() è il modo moderno (Angular 14+) per richiamare servizi dentro una classe. 
-  // Prima si usava metterli dentro i parametri del costruttore.
+  // Iniezione di dipendenze: accesso ai servizi tramite inject()
   private productService = inject(ProductService);
-  private fb = inject(FormBuilder); // FormBuilder serve a costruire i form in modo "Reattivo" e controllato in TS.
+  private fb = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
 
-  // Questo Observable (indicato per convenzione col simbolo del dollaro finale $)
-  // è un "tubo" dove scorrono i dati. L'HTML si "iscriverà" a questo tubo con la pipe 'async'.
+  // Observable che emette l'array di prodotti quando i dati cambiano
   products$!: Observable<Product[]>;
   
-  // Variabile che tiene in memoria quale prodotto ha cliccato l'utente per mostrarlo nei dettagli.
+  // Prodotto attualmente selezionato per mostrare i dettagli
   selectedProduct: Product | undefined;
   
-  // Questa è la struttura logica del nostro form di inserimento.
+  // FormGroup reattivo per validare l'input del nuovo prodotto
   productForm!: FormGroup;
-
-  // L'array delle sezioni disponibili per il dropdown (Select)
+  
+  // Lista delle sezioni disponibili nel dropdown del form
   sezioni: string[] = ['Alimentari e bevande', 'Giocattoli', 'Elettronica', 'Beauty', 'Altro'];
-
-  // Testo visualizzato sul pulsante del dropdown custom
+  
+  // Testo visualizzato nel dropdown (si aggiorna quando l'utente sceglie)
   sezioneSelezionataText: string = 'Seleziona una sezione...';
 
-  // ngOnInit viene lanciato automaticamente da Angular appena il componente è pronto.
+  // Inizializza il componente: carica i prodotti e crea il form di aggiunta
   ngOnInit() {
-    // Ci agganciamo all'observable globale del servizio per avere sempre la lista aggiornata.
+    // Subscribe all'Observable dei prodotti dal servizio
     this.products$ = this.productService.products$;
     
-    // Inizializziamo il form dicendo ad Angular quali campi esistono e quali regole (Validators) devono rispettare.
+    // Crea il form reattivo con validatori su ogni campo
     this.productForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]], // Obbligatorio, min 3 caratteri
-      price: ['', [Validators.required, Validators.min(0.01)]], // Deve costare almeno un centesimo
-      description: ['', [Validators.required, Validators.minLength(10)]], // Minimo 10 caratteri di spiegazione
-      section: ['', Validators.required] // Bisogna per forza scegliere la sezione dal menu a tendina
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: ['', [Validators.required, Validators.min(0.01)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      section: ['', Validators.required]
+    });
+
+    // Ascolta i query params della rotta (es. productId, scroll)
+    // Usato quando si naviga da ricerca a catalogo con prodotto selezionato
+    this.route.queryParams.subscribe(params => {
+      if (params['productId']) {
+        const productId = parseInt(params['productId'], 10);
+        const products = this.productService.getProducts();
+        const product = products.find(p => p.id === productId);
+        
+        if (product) {
+          this.selectedProduct = product;
+          // Forza Angular a rilevare i cambiamenti (OnPush lo rende necessario)
+          this.cdr.markForCheck();
+          
+          // Se richiesto, scrolla il prodotto al centro dello schermo
+          if (params['scroll'] === 'true') {
+            setTimeout(() => {
+              this.scrollProductIntoView();
+            }, 300);
+          }
+        }
+      }
     });
   }
 
-  // Funzione chiamata quando si seleziona una voce dal dropdown custom
-  selezionaSezioneDalDropdown(sezione: string) {
-    this.sezioneSelezionataText = sezione;
-    // Impostiamo il valore nel form logico, formattandolo come serve (es. "alimentari-e-bevande")
-    this.productForm.get('section')?.setValue(sezione.toLowerCase().replace(/ /g, '-'));
-    this.productForm.get('section')?.markAsTouched(); // Così se è vuoto fa vedere l'errore
+  // Scrolla il componente product-detail al centro dello schermo (asse Y)
+  private scrollProductIntoView() {
+    const productDetailElement = document.querySelector('app-product-detail');
+    if (productDetailElement) {
+      // Calcola la posizione per centrare verticalmente il prodotto
+      const elementPosition = productDetailElement.getBoundingClientRect();
+      const offsetPosition = elementPosition.top + window.scrollY - (window.innerHeight / 2) + (elementPosition.height / 2);
+      
+      // Effettua lo scroll fluido
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   }
 
-  // Funzione chiamata quando l'utente fa (click) su una riga della lista
+  // Aggiorna il text del dropdown quando l'utente seleziona una sezione
+  selezionaSezioneDalDropdown(sezione: string) {
+    this.sezioneSelezionataText = sezione;
+    // Converte il nome leggibile in formato slug (minuscolo, trattini)
+    this.productForm.get('section')?.setValue(sezione.toLowerCase().replace(/ /g, '-'));
+    this.productForm.get('section')?.markAsTouched();
+  }
+
+  // Seleziona un prodotto dalla lista per mostrare i dettagli a destra
   selezioneProdotto(product: Product) {
     this.selectedProduct = product;
   }
 
-  // Funzione per il bottone "Cestino". 
-  // Passiamo l'$event per usare stopPropagation, altrimenti cliccando il cestino si attiverebbe 
-  // anche il (click) della riga che sta sotto, e ci farebbe selezionare il prodotto mentre lo eliminiamo.
+  // Elimina un prodotto dalla lista (evento dal bottone trash)
   eliminaProdotto(id: number, event: Event) {
-    event.stopPropagation();
+    event.stopPropagation();  // Evita che il click propaghi al parent (la riga)
     this.productService.deleteProduct(id);
     
-    // Se stavamo guardando i dettagli del prodotto appena eliminato, togliamo la selezione (scompare il dettaglio).
+    // Se stava mostrando il prodotto eliminato, pulisci il dettaglio
     if (this.selectedProduct?.id === id) {
       this.selectedProduct = undefined;
     }
   }
 
-  // Funzione chiamata al submit del form di aggiunta.
+  // Aggiunge un nuovo prodotto dal form (validazione già effettuata)
   aggiungiProdotto() {
-    // Controllo di sicurezza: inseriamo i dati solo se tutte le regole (validators) sono state rispettate.
     if (this.productForm.valid) {
-      // Passiamo tutti i dati scritti nell'input al servizio.
       this.productService.addProduct(this.productForm.value);
-      
-      // Resettiamo/svuotiamo tutti i campi del form così è pronto per il prossimo inserimento.
-      this.productForm.reset(); 
-      // Resettiamo anche il testo del dropdown
+      // Pulisci il form per un nuovo inserimento
+      this.productForm.reset();
       this.sezioneSelezionataText = 'Seleziona una sezione...';
     }
   }
 
-  // Questo metodo viene attivato dall'evento (@Output) del componente "figlio" (product-detail)
-  // quando l'utente clicca "Elimina" da dentro la scheda di dettaglio.
+  // Callback quando il componente figlio ProductDetail emette un evento delete
   onProductDeleted(id: number) {
     this.productService.deleteProduct(id);
     this.selectedProduct = undefined;

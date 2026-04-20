@@ -1,53 +1,58 @@
 import { Injectable } from '@angular/core';
 
+// Servizio singleton per gestire il tema scuro/chiaro dell'applicazione
+// Usa localStorage per persistere la scelta dell'utente tra sessioni
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
-  // Questa è la "chiave" che useremo per salvare e leggere i dati dal LocalStorage (memoria del browser).
+  // Chiave localStorage per salvare la preferenza di tema (dark o light)
   private readonly THEME_KEY = 'theme-preference';
 
-  // Il costruttore viene eseguito non appena l'app parte. Qui richiamiamo la funzione che sceglie il tema.
+  // Al caricamento dell'app, inizializza il tema basato su: preferenza salvata > preferenza di sistema
   constructor() {
     this.initTheme();
   }
 
-  // Inizializza il tema basato su quello che l'utente ha scelto l'ultima volta o sulla preferenza di sistema.
+  // Inizializza il tema all'avvio dell'applicazione
+  // Priorità: 1) Preferenza salvata in localStorage 2) Preferenza di sistema (prefers-color-scheme)
   private initTheme() {
-    // Leggiamo la memoria del browser: c'è già una scelta salvata per "theme-preference"?
+    // Legge il tema salvato in precedenza
     const savedTheme = localStorage.getItem(this.THEME_KEY);
+    
     if (savedTheme) {
-      // Se esiste, impostiamo il tema su dark o light in base a quello che c'è scritto.
+      // Usa il tema salvato
       this.setTheme(savedTheme === 'dark');
     } else {
-      // Se non esiste, chiediamo al browser/sistema operativo se l'utente preferisce il tema scuro (prefers-color-scheme).
+      // Altrimenti, chiede al sistema operativo la preferenza utente
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       this.setTheme(prefersDark);
     }
   }
 
-  // Questa funzione fa il vero e proprio lavoro sporco di cambiare i CSS.
+  // Applica il tema impostando l'attributo data-theme su <html> e salvando la scelta in localStorage
   private setTheme(isDark: boolean) {
     if (isDark) {
-      // Mettiamo un attributo HTML 'data-theme="dark"' sul tag <html> principale.
-      // In styles.css ci sono regole CSS che si attivano solo quando c'è questo attributo!
+      // Aggiunge l'attributo data-theme="dark" al tag html
+      // CSS in styles.css e componenti specifici usano [data-theme='dark'] per stilizzare
       document.documentElement.setAttribute('data-theme', 'dark');
-      // Salviamo la scelta per la prossima volta che l'utente apre il sito.
       localStorage.setItem(this.THEME_KEY, 'dark');
     } else {
-      // Se è chiaro, togliamo l'attributo, così si torna ai colori di default.
+      // Rimuove l'attributo per ritornare ai colori light di default
       document.documentElement.removeAttribute('data-theme');
       localStorage.setItem(this.THEME_KEY, 'light');
     }
   }
 
-  // Funzione pubblica per fare lo switch da un bottone. Legge il tema attuale e lo inverte (NOT logico).
+  // Commuta il tema: da dark a light o viceversa
+  // Usato dal bottone toggle nella navbar
   toggleTheme() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     this.setTheme(!isDark);
   }
 
-  // Ritorna 'true' o 'false'. Utile nei componenti (come la Navbar) per capire se disegnare la luna o il sole.
+  // Verifica se il tema attuale è scuro
+  // Usato nei componenti per visualizzare l'icona giusta (luna vs sole)
   isDarkMode(): boolean {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }

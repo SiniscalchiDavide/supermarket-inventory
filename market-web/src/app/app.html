@@ -1,4 +1,6 @@
 <app-navbar></app-navbar>
+<!-- Overlay sfocato durante la ricerca (copre tutto tranne la navbar) -->
+<div *ngIf="isSearchOpen$ | async" class="search-overlay-global" (click)="closeSearch()"></div>
 <main>
   <router-outlet></router-outlet>
 </main>

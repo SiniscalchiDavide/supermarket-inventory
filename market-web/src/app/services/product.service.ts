@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-// Creiamo un'interfaccia (come una struct in C/C++) per definire com'è fatto un Prodotto.
-// Ci aiuta a non fare errori quando scriviamo il codice (TypeScript ci avvisa se manca qualcosa).
+// Interfaccia che definisce la struttura di un prodotto nel catalogo
 export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  section: string;
+  id: number;           // Identificatore univoco del prodotto
+  name: string;         // Nome del prodotto
+  price: number;        // Prezzo in euro
+  description: string;  // Descrizione dettagliata del prodotto
+  section: string;      // Sezione/categoria di appartenenza
 }
 
-// @Injectable significa che questo servizio può essere "iniettato" (usato) da qualsiasi componente.
-// 'root' significa che ce n'è solo uno per tutta l'app (è un Singleton).
+// Servizio singleton per gestire i prodotti: carica, aggiunge, elimina e persiste in localStorage
 @Injectable({
   providedIn: 'root'
 })
 
 export class ProductService {
-  // Questa è la chiave ("nome del file") che useremo per salvare i prodotti nella memoria del browser
+  // Chiave per accedere ai dati nel localStorage del browser
   private readonly STORAGE_KEY = 'market-products';
 
-  // Questo è il nostro "database" temporaneo in RAM. È un array di oggetti Product.
+  // Array di 5 prodotti predefiniti da mostrare al primo caricamento
   private initialProducts: Product[] = [
     { id: 1, name: 'Pane Integrale', price: 2.50, description: 'Pane fresco integrale', section: 'alimentari-e-bevande' },
     { id: 2, name: 'Latte', price: 1.20, description: 'Latte intero fresco', section: 'alimentari-e-bevande' },
@@ -30,76 +28,64 @@ export class ProductService {
     { id: 5, name: 'Lego Star Wars', price: 120.00, description: 'Set di costruzioni spaziali', section: 'giocattoli' }
   ];
 
-  // Il BehaviorSubject è come una variabile speciale che "strilla" a tutti quando cambia il suo valore.
-  // Inizializziamo a vuoto, perché dobbiamo prima controllare il LocalStorage nel costruttore!
+  // BehaviorSubject che emette l'array aggiornato di prodotti ogni volta che cambia
   private productsSubject = new BehaviorSubject<Product[]>([]);
   
-  // Questa è la "cassa di risonanza" pubblica che i componenti ascoltano (Observable) per sapere se ci sono nuovi prodotti.
+  // Observable pubblico che i componenti ascoltano per ricevere aggiornamenti sulla lista
   products$ = this.productsSubject.asObservable();
 
+  // Carica i prodotti dal localStorage al momento dell'instanziazione del servizio
   constructor() {
     this.loadProducts();
   }
 
-  // Funzione privata per caricare i dati all'avvio dell'app.
+  // Legge i prodotti dal localStorage o usa i dati iniziali se è la prima volta
   private loadProducts() {
-    // Andiamo a leggere la memoria del browser (localStorage)
     const savedData = localStorage.getItem(this.STORAGE_KEY);
     
     if (savedData) {
-      // Se ci sono dati salvati (sono una stringa JSON), li trasformiamo di nuovo in un Array vero e proprio
+      // Converte la stringa JSON memorizzata in array di oggetti
       const parsedProducts = JSON.parse(savedData);
       this.productsSubject.next(parsedProducts);
     } else {
-      // Altrimenti, se è la prima volta che l'utente apre il sito, usiamo i 5 prodotti finti (initialProducts)
+      // Prima volta: usa i prodotti iniziali e li salva subito
       this.productsSubject.next(this.initialProducts);
-      // E li salviamo per la prossima volta!
       this.saveToStorage(this.initialProducts);
     }
   }
 
-  // Funzione privata per salvare fisicamente l'array sul disco (nella memoria del browser)
+  // Salva i prodotti nel localStorage del browser per persistenza tra sessioni
   private saveToStorage(products: Product[]) {
-    // Il localStorage accetta solo stringhe (testo), quindi dobbiamo convertire l'Array (oggetti) in una stringa JSON.
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(products));
   }
 
-  // Metodo per farsi dare l'array di prodotti al momento attuale.
+  // Ritorna l'array di prodotti attuale dal BehaviorSubject
   getProducts(): Product[] {
     return this.productsSubject.getValue();
   }
 
-  // Metodo per aggiungere un nuovo prodotto (Omit significa "tutto tranne l'ID", che lo calcoliamo noi).
+  // Aggiunge un nuovo prodotto: calcola l'ID, lo aggiunge e aggiorna il BehaviorSubject
   addProduct(product: Omit<Product, 'id'>) {
     const currentProducts = this.getProducts();
-    
-    // Troviamo l'ID più grande e aggiungiamo 1. È come l'AUTO_INCREMENT di un database SQL.
+    // Genera un ID univoco incrementale (max ID + 1)
     const newId = currentProducts.length > 0 ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
-    
-    // Creiamo l'oggetto finale unendo i dati dal form (...product) e il nuovo ID calcolato.
+    // Crea il prodotto completo e lo aggiunge alla lista
     const newProduct = { ...product, id: newId };
-    
-    // Uniamo il nuovo prodotto a quelli vecchi in un nuovo array
     const updatedProducts = [...currentProducts, newProduct];
     
-    // Salviamo permanentemente nel browser
+    // Persiste i cambiamenti e notifica i subscribers
     this.saveToStorage(updatedProducts);
-    
-    // Avvisiamo tutti che la lista è cambiata (la UI si aggiornerà da sola)
     this.productsSubject.next(updatedProducts);
   }
 
-  // Metodo per eliminare un prodotto usando il suo ID univoco.
+  // Rimuove un prodotto per ID: filtra la lista, persiste e aggiorna gli subscribers
   deleteProduct(id: number) {
     const currentProducts = this.getProducts();
-    
-    // Usiamo filter() per creare un nuovo array tenendo solo i prodotti che NON hanno l'ID da eliminare.
+    // Mantiene solo i prodotti che NON hanno l'ID da eliminare
     const filteredProducts = currentProducts.filter(p => p.id !== id);
     
-    // Salviamo permanentemente nel browser
+    // Persiste i cambiamenti e notifica i subscribers
     this.saveToStorage(filteredProducts);
-    
-    // Aggiorniamo la lista globale inviando il nuovo array filtrato (la UI si aggiornerà da sola)
     this.productsSubject.next(filteredProducts);
   }
 }

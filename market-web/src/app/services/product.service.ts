@@ -16,6 +16,7 @@ export interface Product {
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductService {
   // Questa è la chiave ("nome del file") che useremo per salvare i prodotti nella memoria del browser
   private readonly STORAGE_KEY = 'market-products';

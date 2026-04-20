@@ -1,0 +1,37 @@
+<div class="container py-5 mt-5">
+  <!-- Inizio header della pagina -->
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <!-- text-capitalize fa in modo che la parola "Altro" abbia sempre la prima lettera maiuscola -->
+      <h2 class="display-4 fw-bold text-capitalize">Altro</h2>
+      <p class="text-muted">Esplora tutti i prodotti della categoria Altro</p>
+    </div>
+  </div>
+  
+  <!-- Usiamo la pipe 'async' di Angular. Questa funzione "spreme" i dati fuori 
+       dall'Observable in background, permettendoci di usarli come un semplice array (as products) -->
+  <div class="row" *ngIf="(products$ | async) as products">
+    
+    <!-- Mostra una card grande e vuota se non c'è nemmeno un prodotto in questa sezione -->
+    <div class="col-12" *ngIf="products.length === 0">
+      <div class="card p-5 text-center empty-state-card">
+        <!-- L'icona della scatola (bi-box) di Bootstrap -->
+        <i class="bi bi-box display-1 text-muted mb-3"></i>
+        <h4 class="mb-2">Nessun prodotto trovato</h4>
+        <p class="text-muted mb-0">L'elenco dei prodotti per questa sezione è attualmente vuoto.</p>
+      </div>
+    </div>
+    
+    <!-- Per ogni prodotto che esiste (grazie a *ngFor), Angular clona questo div -->
+    <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let product of products">
+      <!-- Usiamo classi CSS per le altezze (h-100) per pareggiare le schede sulla stessa riga -->
+      <div class="card h-100 p-4">
+        <!-- Visualizza il nome usando il data binding -->
+        <h3 class="h5 fw-bold">{{ product.name }}</h3>
+        <!-- Trasforma automaticamente i numeri (15.5) in formato monetario (€ 15,50) -->
+        <p class="fs-4 fw-semibold text-primary-accent mb-3">{{ product.price | currency:'EUR' }}</p>
+        <p class="text-muted small mb-0">{{ product.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

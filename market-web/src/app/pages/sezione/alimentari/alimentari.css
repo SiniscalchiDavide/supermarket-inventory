@@ -1,0 +1,22 @@
+/* La classe empty-state-card serve a mostrare un grande quadrato tratteggiato quando la sezione è vuota.
+   È un pattern UI comune per far capire all'utente che "qui dovrebbe esserci qualcosa, ma ora non c'è nulla". */
+.empty-state-card {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed var(--input-border);
+  background-color: transparent !important; /* Rimuove lo sfondo bianco di default delle card */
+  box-shadow: none !important; /* Togliamo le ombre perché è solo un tratteggio */
+}
+
+/* Modifiche esclusive per quando il tag <html> ha attributo data-theme="dark" */
+[data-theme="dark"] .empty-state-card {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Classe di utilità per colorare i prezzi con il colore di accento (Blu nel tema chiaro, Viola nel tema scuro) */
+.text-primary-accent {
+  color: var(--primary-accent);
+}

@@ -1,0 +1,107 @@
+<div class="container py-5 mt-5">
+  <div class="row g-4">
+    <!-- Colonna di sinistra: Lista Prodotti e Form (col-md-6) -->
+    <div class="col-md-6">
+      <h2 class="mb-4">Lista Prodotti</h2>
+      
+      <!-- Lista Prodotti -->
+      <div class="list-group mb-5">
+        <!-- Uso di *ngFor per creare un bottone (riga) per ogni prodotto nell'array.
+             La pipe "async" serve per "scartare" l'Observable e leggerne l'array di dentro automaticamente. -->
+        <button 
+          *ngFor="let product of products$ | async" 
+          type="button" 
+          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          [class.active]="selectedProduct?.id === product.id"
+          (click)="selezioneProdotto(product)">
+          
+          <div>
+            <strong>{{ product.name }}</strong> - {{ product.price | currency:'EUR' }}
+          </div>
+          
+          <!-- Bottone Elimina con icona trash. Passiamo l'$event per bloccare il click sulla riga madre -->
+          <button class="btn btn-sm btn-danger rounded-circle" (click)="eliminaProdotto(product.id, $event)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </button>
+        
+        <!-- *ngIf mostra questo DIV solo se la lunghezza dell'array è zero (nessun prodotto) -->
+        <div *ngIf="(products$ | async)?.length === 0" class="alert alert-info">
+          Nessun prodotto disponibile nella lista.
+        </div>
+      </div>
+
+      <!-- Form Aggiungi Prodotto -->
+      <div class="card p-4">
+        <h3 class="mb-3 h5 add-product-title">Aggiungi Nuovo Prodotto</h3>
+        <!-- [formGroup] dice ad Angular che tutto il blocco HTML è collegato alla variabile productForm in TypeScript -->
+        <form [formGroup]="productForm" (ngSubmit)="aggiungiProdotto()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nome Prodotto</label>
+            <!-- formControlName collega questo input di testo alla variabile 'name' dichiarata nel TS -->
+            <input type="text" id="name" formControlName="name" class="form-control" 
+                   [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+            <div class="invalid-feedback">Nome obbligatorio (min 3 caratteri).</div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="price" class="form-label">Prezzo (€)</label>
+            <input type="number" id="price" formControlName="price" class="form-control" step="0.01"
+                   [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+            <div class="invalid-feedback">Prezzo obbligatorio (min 0.01€).</div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="description" class="form-label">Descrizione</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="3"
+                      [class.is-invalid]="productForm.get('description')?.invalid && productForm.get('description')?.touched"></textarea>
+            <div class="invalid-feedback">Descrizione obbligatoria (min 10 caratteri).</div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label d-block">Sezione</label>
+            <!-- Dropdown Custom Bootstrap per sembrare identico alla navbar -->
+            <div class="dropdown custom-dropdown-wrapper" [class.is-invalid-dropdown]="productForm.get('section')?.invalid && productForm.get('section')?.touched">
+              <button class="btn btn-dropdown-select w-100 d-flex justify-content-between align-items-center" 
+                      type="button" 
+                      id="sectionDropdown" 
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false"
+                      [class.text-muted]="productForm.get('section')?.value === '' || productForm.get('section')?.value === null">
+                <span>{{ sezioneSelezionataText }}</span>
+                <i class="bi bi-chevron-down text-muted" style="font-size: 0.8rem;"></i>
+              </button>
+              <!-- Il menu vero e proprio sfocato (backdrop-filter si applica qui, come in navbar) -->
+              <ul class="dropdown-menu w-100 shadow-sm" aria-labelledby="sectionDropdown">
+                <!-- Ripetiamo l'array come facciamo in Navbar -->
+                <li *ngFor="let sezione of sezioni">
+                  <a class="dropdown-item" href="#" (click)="$event.preventDefault(); selezionaSezioneDalDropdown(sezione)">
+                    {{ sezione }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- Feedback errore personalizzato visto che non usiamo più l'input nativo -->
+            <div class="text-danger small mt-1" *ngIf="productForm.get('section')?.invalid && productForm.get('section')?.touched">
+              Seleziona una sezione.
+            </div>
+          </div>
+          
+          <!-- Il pulsante di invio. È disabilitato finché il form non diventa valido in TS -->
+          <button type="submit" class="btn btn-success-custom w-100" [disabled]="productForm.invalid">
+            Aggiungi Prodotto
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Colonna di destra: Dettaglio Prodotto (col-md-6) -->
+    <div class="col-md-6">
+      <!-- Invochiamo il componente "figlio" passandogli i dati del prodotto selezionato tramite Property Binding [] -->
+      <app-product-detail 
+        [product]="selectedProduct" 
+        (delete)="onProductDeleted($event)">
+      </app-product-detail>
+    </div>
+  </div>
+</div>

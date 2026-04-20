@@ -1,0 +1,9 @@
+.footer-blur {
+  background: var(--nav-glass-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid rgba(128, 128, 128, 0.15);
+  color: var(--text-color) !important;
+  position: relative;
+  z-index: 0; /* Abbassiamo lo z-index del footer al minimo in modo che i dropdown e i main content passino sempre sopra */
+}

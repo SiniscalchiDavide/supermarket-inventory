@@ -1,0 +1,91 @@
+/* Stile lista prodotti interazioni */
+.list-group-item {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  border-radius: var(--card-radius) !important;
+  margin-bottom: 10px;
+  border: 1px solid rgba(128,128,128,0.15);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .add-product-title {
+  color: #FFFFFF !important;
+}
+
+.list-group-item:hover {
+  background-color: var(--product-hover-bg) !important;
+  color: var(--product-hover-text) !important;
+  transform: scale(1.01);
+}
+
+.list-group-item.active {
+  background-color: var(--primary-accent) !important;
+  border-color: var(--primary-accent) !important;
+  color: #fff !important;
+}
+
+/* Custom styling per arrotondare e sfocare il contenitore del select */
+[data-theme="dark"] .custom-dropdown-wrapper .btn-dropdown-select:focus,
+[data-theme="dark"] .custom-dropdown-wrapper .btn-dropdown-select[aria-expanded="true"] {
+  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.3);
+}
+
+.custom-dropdown-wrapper .dropdown-menu {
+  z-index: 1055; /* Aumenta la priorità rispetto ad altri elementi della pagina (il footer di solito ha z-index minore, o il modal è 1050) */
+  margin-bottom: 2rem; /* Spazio extra per evitare che il dropdown tocchi esattamente il bordo */
+}
+
+/* Stile per mostrare l'errore visivo sul bottone dropdown finto */
+.is-invalid-dropdown .btn-dropdown-select {
+  border-color: #dc3545;
+}
+.is-invalid-dropdown .btn-dropdown-select:focus,
+.is-invalid-dropdown .btn-dropdown-select[aria-expanded="true"] {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+/* Pulsante aggiungi prodotto verde stile Apple */
+.btn-success-custom {
+  background-color: rgba(40, 205, 65, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-extreme);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  padding: 0.6rem 1.5rem;
+  /* Effetto blur colorato glow verde */
+  box-shadow: 0 8px 24px rgba(40, 205, 65, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.btn-success-custom:hover {
+  background-color: #28cd41;
+  transform: scale(1.02);
+  box-shadow: 0 12px 28px rgba(40, 205, 65, 0.6);
+}
+
+.btn-success-custom:active {
+  transform: scale(0.98);
+}
+
+.btn-danger {
+  background-color: rgba(255, 59, 48, 0.9);
+  color: #fff;
+  border: none;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.btn-danger:hover {
+  background-color: #ff3b30;
+  transform: scale(1.1);
+}
+
+.btn-danger:active {
+  transform: scale(0.9);
+}

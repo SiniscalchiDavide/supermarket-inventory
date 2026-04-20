@@ -1,0 +1,36 @@
+<div class="container py-5 mt-5">
+  <!-- Riga con il titolo principale della sezione -->
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <h2 class="display-4 fw-bold text-capitalize">Beauty</h2>
+      <p class="text-muted">Esplora tutti i prodotti della categoria Beauty</p>
+    </div>
+  </div>
+  
+  <!-- Usiamo la pipe 'async' di Angular. "Srotola" i dati dall'Observable products$ 
+       e crea una variabile locale chiamata 'products' che è un normale array -->
+  <div class="row" *ngIf="(products$ | async) as products">
+    
+    <!-- Mostriamo questa scheda enorme tratteggiata (*ngIf="products.length === 0") se non c'è nulla in questa categoria -->
+    <div class="col-12" *ngIf="products.length === 0">
+      <div class="card p-5 text-center empty-state-card">
+        <!-- L'icona con le stelle è specifica di questa sezione (Bootstraps Icons: bi-stars) -->
+        <i class="bi bi-stars display-1 text-muted mb-3"></i>
+        <h4 class="mb-2">Nessun prodotto trovato</h4>
+        <p class="text-muted mb-0">L'elenco dei prodotti per questa sezione è attualmente vuoto.</p>
+      </div>
+    </div>
+    
+    <!-- *ngFor ripete questa "colonna" tante volte quanti sono i prodotti trovati -->
+    <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let product of products">
+      <!-- Ogni prodotto viene visualizzato dentro una .card che prende tutta l'altezza (h-100) per pareggiarsi con le altre sulla riga -->
+      <div class="card h-100 p-4">
+        <!-- Mostriamo il nome della variabile usando {{ string interpolation }} -->
+        <h3 class="h5 fw-bold">{{ product.name }}</h3>
+        <!-- Pipe 'currency' per la valuta -->
+        <p class="fs-4 fw-semibold text-primary-accent mb-3">{{ product.price | currency:'EUR' }}</p>
+        <p class="text-muted small mb-0">{{ product.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

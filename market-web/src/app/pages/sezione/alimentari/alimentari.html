@@ -1,0 +1,34 @@
+<div class="container py-5 mt-5">
+  <!-- Intestazione della pagina di sezione -->
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <h2 class="display-4 fw-bold text-capitalize">Alimentari e Bevande</h2>
+      <p class="text-muted">Esplora tutti i prodotti della categoria Alimentari e Bevande</p>
+    </div>
+  </div>
+  
+  <!-- Usiamo *ngIf per sbrogliare (async) l'Observable products$ e metterlo nella variabile locale 'products' -->
+  <div class="row" *ngIf="(products$ | async) as products">
+    
+    <!-- Questo blocco viene stampato nell'HTML solo se l'array 'products' è vuoto (lunghezza 0) -->
+    <div class="col-12" *ngIf="products.length === 0">
+      <div class="card p-5 text-center empty-state-card">
+        <i class="bi bi-basket display-1 text-muted mb-3"></i>
+        <h4 class="mb-2">Nessun prodotto trovato</h4>
+        <p class="text-muted mb-0">L'elenco dei prodotti per questa sezione è attualmente vuoto.</p>
+      </div>
+    </div>
+    
+    <!-- Questo blocco è un ciclo: *ngFor genera una Card (un quadratino) per ogni singolo prodotto che trova -->
+    <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let product of products">
+      <!-- Usiamo h-100 per far sì che tutte le card in una riga siano alte uguali, indipendentemente dalla lunghezza del testo -->
+      <div class="card h-100 p-4">
+        <!-- Stampiamo i dati del prodotto usando le doppie graffe {{ }} (String Interpolation) -->
+        <h3 class="h5 fw-bold">{{ product.name }}</h3>
+        <!-- Usiamo una Pipe di Angular (currency:'EUR') per formattare il numero come prezzo con l'Euro -->
+        <p class="fs-4 fw-semibold text-primary-accent mb-3">{{ product.price | currency:'EUR' }}</p>
+        <p class="text-muted small mb-0">{{ product.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

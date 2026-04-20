@@ -1,0 +1,364 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+  /* Palette Colori Chiara (Stile Apple) */
+  --bg-color: #FFFFFF; /* Sfondo principale puro e pulito */
+  --card-bg: rgba(245, 245, 247, 0.7); /* Surface chiaro grigio con trasparenza per far funzionare il blur */
+  --text-color: #000000; /* Testo principale NERO ASSOLUTO */
+  --text-muted: #000000; /* Anche i secondari NERO ASSOLUTO */
+  
+  /* Accent Color: Apple Blue (#0071e3), rgba per blur */
+  --primary-accent: rgba(0, 113, 227, 0.9); 
+  --primary-accent-hover: #0077ED;
+  
+  /* Glassmorphism avanzato stile iOS/macOS */
+  --nav-glass-bg: rgba(255, 255, 255, 0.72);
+  --nav-text-color: #000000;
+  --product-hover-bg: #E8E8ED;
+  --product-hover-text: #000000;
+  
+  --border-radius-extreme: 980px; /* Apple pill-shape radius */
+  --card-radius: 20px;
+
+  /* Inputs variables */
+  --input-bg: rgba(255, 255, 255, 0.5); /* Semitrasparente per abilitare il blur */
+  --input-border: rgba(210, 210, 215, 0.5);
+}
+
+[data-theme="dark"] {
+  /* Palette Colori Scura (Stile Apple) */
+  --bg-color: #000000; /* Sfondo principale nero assoluto per OLED */
+  --card-bg: rgba(28, 28, 30, 0.7); /* Surface scuro grigio con trasparenza per blur pesante */
+  --text-color: #FFFFFF; /* Testo principale BIANCO ASSOLUTO */
+  --text-muted: #FFFFFF; /* Anche i secondari BIANCO ASSOLUTO */
+  
+  /* Accent Color: Apple Dark Blue (#2997ff) */
+  --primary-accent: rgba(41, 151, 255, 0.9);
+  --primary-accent-hover: #3E9EFF;
+  
+  /* Glassmorphism scuro */
+  --nav-glass-bg: rgba(0, 0, 0, 0.72);
+  --nav-text-color: #FFFFFF;
+  --product-hover-bg: #2C2C2E;
+  --product-hover-text: #FFFFFF;
+
+  /* Inputs variables dark */
+  --input-bg: rgba(28, 28, 30, 0.5); /* Semitrasparente per abilitare il blur */
+  --input-border: rgba(58, 58, 60, 0.5);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fix global headings color for Bootstrap override */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: var(--text-color) !important;
+}
+
+/* Ensure app-root and main push the footer down */
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+app-footer {
+  display: block;
+  width: 100%;
+}
+
+/* Override text-muted per utilizzare la nostra variabile di secondary text */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Accessibilità: Focus visibile per tab navigation */
+*:focus-visible {
+  outline: 3px solid var(--primary-accent) !important;
+  outline-offset: 2px !important;
+}
+
+.card {
+  border-radius: var(--card-radius) !important;
+  border: none;
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+  /* Aggiunto blur stile Apple a tutte le card */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+[data-theme="dark"] .card {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] .card:hover {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* Bottoni Accent con Blur */
+.btn {
+  border-radius: var(--border-radius-extreme) !important;
+  padding: 0.6rem 1.5rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  font-weight: 400;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.btn-primary {
+  background-color: var(--primary-accent);
+  border: none;
+  color: #FFFFFF !important;
+  /* Aggiunto blur colorato glow (Apple-like) */
+  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
+}
+
+[data-theme="dark"] .btn-primary {
+  box-shadow: 0 8px 24px rgba(41, 151, 255, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-accent-hover);
+  color: #FFFFFF !important;
+  transform: scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 113, 227, 0.6);
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 12px 28px rgba(41, 151, 255, 0.6);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-danger {
+  background-color: rgba(255, 59, 48, 0.9);
+  color: #fff;
+  border: none;
+  /* Aggiunto blur colorato glow rosso */
+  box-shadow: 0 8px 24px rgba(255, 59, 48, 0.4);
+}
+
+.btn-danger:hover {
+  background-color: #ff3b30;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 12px 28px rgba(255, 59, 48, 0.6);
+}
+
+.btn-danger:active {
+  transform: scale(0.95);
+}
+
+/* Bottoni Icona Blur (Tema Toggle, Language) */
+.btn-icon-blur {
+  background-color: var(--nav-glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(128, 128, 128, 0.15);
+  color: var(--nav-text-color);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.btn-icon-blur:hover {
+  background-color: var(--product-hover-bg);
+  color: var(--product-hover-text);
+  transform: scale(1.05);
+}
+
+.btn-icon-blur:active {
+  transform: scale(0.95);
+}
+.navbar {
+  background: var(--nav-glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+  transition: background-color 0.3s;
+}
+
+.navbar-brand, .nav-link, .nav-item {
+  color: var(--nav-text-color) !important;
+}
+
+/* Effetto blur per i singoli item della navbar come richiesto */
+.nav-item, .nav-separator {
+  border-radius: var(--border-radius-extreme);
+  padding: 0 5px;
+}
+
+/* Aggiungi dropdown menu styling coerente */
+.dropdown-menu {
+  background-color: var(--nav-glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: var(--card-radius) !important;
+  border: 1px solid rgba(128, 128, 128, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  padding: 8px 0 !important;
+  z-index: 1055 !important; /* Forza il dropdown ad essere sempre sopra (sopra footer, main e hero) */
+}
+.dropdown-item {
+  color: var(--text-color);
+  border-radius: 8px;
+  margin: 4px 8px;
+  width: calc(100% - 16px);
+  background-color: transparent;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+  background-color: var(--primary-accent);
+  color: #FFFFFF !important;
+}
+
+/* Separatore navbar */
+.nav-separator {
+  color: var(--text-color);
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Spaziatura per navbar fixed rimossa per far occupare alla hero esattamente 100vh */
+
+/* Inputs & Form Elements (Leggibilità e Accessibilità) */
+.form-control, .form-select {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color) !important;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  /* Applichiamo il Gaussian blur e rendiamo il background leggermente trasparente */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.form-select option {
+  background-color: var(--bg-color); /* Lo sfondo pieno serve per evitare testi sovrapposti nella tendina nativa dell'OS */
+  color: var(--text-color);
+}
+
+.form-control::placeholder, .form-select::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .form-control::placeholder, [data-theme="dark"] .form-select::placeholder {
+  color: #a0a0a0;
+}
+
+.custom-select-icon {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2386868b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px 12px;
+  padding-right: 2.5rem;
+}
+
+[data-theme="dark"] .custom-select-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--input-bg);
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+  color: var(--text-color);
+  outline: none;
+}
+
+[data-theme="dark"] .form-control:focus, [data-theme="dark"] .form-select:focus {
+  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.3);
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-color) !important;
+  font-size: 0.95rem;
+}
+
+/* Custom styling per arrotondare e sfocare il contenitore del select */
+.custom-dropdown-wrapper .btn-dropdown-select {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color) !important;
+  border-radius: 12px !important;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: left;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  box-shadow: none; /* Rimuove glow dei bottoni principali */
+}
+
+/* Gestione dei dropdown nella Navbar (senza background e border dell'input normale) */
+.navbar .custom-dropdown-wrapper .btn-dropdown-select {
+  background-color: transparent !important;
+  border: none !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--nav-text-color) !important;
+}
+
+[data-theme="dark"] .custom-dropdown-wrapper .btn-dropdown-select {
+  color: #FFFFFF !important;
+}
+
+.custom-dropdown-wrapper .btn-dropdown-select:focus,
+.custom-dropdown-wrapper .btn-dropdown-select[aria-expanded="true"] {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+  outline: none;
+}
+
+.navbar .custom-dropdown-wrapper .btn-dropdown-select:focus,
+.navbar .custom-dropdown-wrapper .btn-dropdown-select[aria-expanded="true"] {
+  border-color: transparent;
+  box-shadow: none; /* Nella navbar non vogliamo il ring blu del focus sugli input */
+}

@@ -1,0 +1,45 @@
+.signup-wrapper {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+[data-theme="dark"] .signup-card {
+  background-color: rgba(28, 28, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .signup-card .text-muted {
+  color: #FFFFFF !important;
+}
+
+/* Modifiche form checkbox per accessibilità */
+.form-check-input {
+  width: 1.2em;
+  height: 1.2em;
+  margin-top: 0.15em;
+  cursor: pointer;
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+  border-color: var(--primary-accent);
+}
+
+[data-theme="dark"] .form-check-input:focus {
+  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.3);
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-accent);
+  border-color: var(--primary-accent);
+}

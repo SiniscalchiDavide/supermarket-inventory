@@ -1,0 +1,29 @@
+.login-wrapper {
+  min-height: calc(100vh - 160px); /* 100vh meno lo spazio di header/footer approsimativo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Modifiche specifiche per garantire contrasto WCAG AA nel tema scuro */
+[data-theme="dark"] .login-card {
+  background-color: rgba(28, 28, 30, 0.7); /* Eredita trasparenza globale per far funzionare il blur */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Bordo più visibile per delimitare la card */
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .login-card .text-muted {
+  color: #FFFFFF !important; /* Bianco assoluto */
+}
+
+/* Modifiche input specifiche per il form di login se necessarie */
+.login-card .form-control {
+  padding: 1rem 1.2rem;
+}

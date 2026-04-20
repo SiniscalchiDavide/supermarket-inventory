@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top px-3">
+  <div class="container-fluid">
+    <!-- Brand che funge da home link -->
+    <a class="navbar-brand fw-bold mb-0 h1 fs-4 brand-roman" routerLink="/" (click)="scrollToTop()" style="cursor: pointer;">Market</a>
+    
+    <!-- Separatore SOLO tra Market e link principali -->
+    <span class="nav-separator mx-2 d-none d-lg-block">|</span>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
+        <!-- Componente Sezioni dentro la Navbar come dropdown (ora prima di Catalogo) -->
+        <app-sezioni></app-sezioni>
+
+        <!-- Voci Navbar Principali -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/info" routerLinkActive="active">Catalogo</a>
+        </li>
+      </ul>
+
+      <!-- Sezione Destra (Pulsanti destri, icone utente) -->
+      <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0 flex-wrap">
+        
+        <!-- d. Icona Ricerca (Finta ma esteticamente valida per un e-commerce) -->
+        <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
+                style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
+                aria-label="Cerca">
+          <i class="bi bi-search"></i>
+        </button>
+
+        <!-- e. Icona Carrello (Finta) -->
+        <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center position-relative" 
+                style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
+                aria-label="Carrello">
+          <i class="bi bi-cart3"></i>
+          <!-- Badge numerico del carrello (design pattern classico e-commerce) -->
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+            0
+            <span class="visually-hidden">prodotti nel carrello</span>
+          </span>
+        </button>
+
+        <!-- b. Pulsante toggle tema -->
+        <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
+                style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
+                (click)="toggleTheme()" 
+                aria-label="Cambia tema">
+          <i class="bi" [ngClass]="isDarkTheme() ? 'bi-moon-stars-fill' : 'bi-brightness-high-fill'"></i>
+        </button>
+
+        <!-- c. Pulsante lingua dropdown -->
+        <div class="dropdown custom-dropdown-wrapper">
+          <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center" 
+                  type="button" 
+                  id="languageDropdown" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false"
+                  style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;"
+                  aria-label="Seleziona lingua">
+            <i class="bi bi-globe"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="languageDropdown">
+            <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="$event.preventDefault()">
+              <span>Italiano</span> <i class="bi bi-check" style="color: var(--primary-accent);"></i>
+            </a></li>
+            <li><a class="dropdown-item" href="#" (click)="$event.preventDefault()">English</a></li>
+          </ul>
+        </div>
+
+        <!-- a. Pulsante Accedi / Registrati (spostato a destra) o Esci (se loggato) -->
+        <button *ngIf="!isLoggedIn()" class="btn btn-primary" routerLink="/login">Accedi / Registrati</button>
+        <button *ngIf="isLoggedIn()" class="btn btn-danger" (click)="logout()">Esci</button>
+      </div>
+    </div>
+  </div>
+</nav>

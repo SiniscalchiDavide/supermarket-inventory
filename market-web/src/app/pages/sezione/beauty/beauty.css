@@ -1,0 +1,18 @@
+.empty-state-card {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed var(--input-border);
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .empty-state-card {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.text-primary-accent {
+  color: var(--primary-accent);
+}

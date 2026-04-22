@@ -1,17 +1,30 @@
+<!-- Elemento di navigazione contenente il dropdown delle sezioni -->
 <li class="nav-item dropdown custom-dropdown-wrapper">
-  <!-- Sostituiamo il classico link <a> con un <button> in stile Aggiungi Prodotto -->
+  <!-- Pulsante trigger del dropdown: sostituisce il classico link <a> con un <button> personalizzato -->
+  <!-- Utilizza le classi Bootstrap: btn (pulsante base), d-flex (flexbox), justify-content-between (spazi fra gli elementi) -->
+  <!-- align-items-center (centra verticalmente), bg-transparent (sfondo trasparente), border-0 (elimina il bordo) -->
   <button class="btn btn-dropdown-select d-flex justify-content-between align-items-center bg-transparent border-0" 
           type="button" 
-          id="navbarDropdown" 
-          data-bs-toggle="dropdown" 
-          aria-expanded="false"
-          style="padding: 0.5rem 1rem; width: auto; gap: 0.5rem;">
+          id="navbarDropdown"    <!-- Identificatore unico utilizzato come collegamento col menu -->
+          data-bs-toggle="dropdown"  <!-- Direttiva Bootstrap: trasforma questo pulsante in trigger dropdown -->
+          aria-expanded="false"   <!-- Attributo di accessibilità: indica che il dropdown è inizialmente chiuso -->
+          style="padding: 0.5rem 1rem; width: auto; gap: 0.5rem;">  <!-- Stili custom per spaziatura e gap fra elementi -->
+    <!-- Testo visualizzato nel pulsante -->
     <span>Sezioni</span>
+    <!-- Icona freccia verso il basso (chevron-down da Bootstrap Icons) che indica la presenza di un menu a tendina -->
     <i class="bi bi-chevron-down text-muted" style="font-size: 0.8rem;"></i>
   </button>
 
+  <!-- Menu a tendina che appare quando il pulsante viene cliccato -->
+  <!-- shadow-sm aggiunge un'ombra leggera per effetto visivo, aria-labelledby lo collega al pulsante per l'accessibilità -->
   <ul class="dropdown-menu shadow-sm" aria-labelledby="navbarDropdown">
+    <!-- Ciclo Angular: itera su ogni elemento dell'array "sezioni" del componente TypeScript -->
     <li *ngFor="let sezione of sezioni">
+      <!-- Link dell'elemento del menu -->
+      <!-- routerLink: crea un collegamento verso il percorso dinamico '/sezione/[nome-sezione-formattato]' -->
+      <!-- toLowerCase(): converte il testo in minuscolo (es: "Alimentari" → "alimentari") -->
+      <!-- replace(/ /g, '-'): sostituisce gli spazi con trattini (es: "Foto e Video" → "foto-e-video") -->
+      <!-- {{ sezione }}: visualizza il testo della sezione dinamicamente -->
       <a class="dropdown-item" [routerLink]="['/sezione', sezione.toLowerCase().replace(/ /g, '-')]">{{ sezione }}</a>
     </li>
   </ul>

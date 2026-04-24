@@ -5,15 +5,15 @@
         
         <div class="card signup-card p-4 p-md-5 my-5">
           <div class="text-center mb-4">
-            <h1 class="fw-bold mb-2">Crea Account</h1>
-            <p class="text-muted">Unisciti a Market in pochi semplici passi</p>
+            <h1 class="fw-bold mb-2">{{ 'SIGNUP.TITLE' | translate }}</h1>
+            <p class="text-muted">{{ 'SIGNUP.SUBTITLE' | translate }}</p>
           </div>
           
           <!-- Messaggio di Successo -->
           <div *ngIf="isSuccess" class="alert alert-success d-flex align-items-center mb-4 border-0" style="border-radius: 12px; background-color: rgba(40, 205, 65, 0.15); color: #28cd41;" role="alert">
             <i class="bi bi-check-circle-fill flex-shrink-0 me-3 fs-4"></i>
             <div>
-              <strong>Registrazione completata!</strong> Il tuo account è stato creato con successo. Reindirizzamento in corso...
+              <strong>{{ 'SIGNUP.SUCCESS_TITLE' | translate }}</strong> {{ 'SIGNUP.SUCCESS_DESC' | translate }}
             </div>
           </div>
           
@@ -28,43 +28,43 @@
             
             <div class="row">
               <div class="col-md-6 mb-4">
-                <label for="firstName" class="form-label">Nome</label>
+                <label for="firstName" class="form-label">{{ 'SIGNUP.FIRST_NAME' | translate }}</label>
                 <input type="text" id="firstName" formControlName="firstName" class="form-control" 
-                       [ngClass]="{ 'is-invalid': isSubmitted && f['firstName'].errors }" placeholder="Es. Mario">
+                       [ngClass]="{ 'is-invalid': isSubmitted && f['firstName'].errors }" [placeholder]="'SIGNUP.FIRST_NAME_PH' | translate">
                 <div *ngIf="isSubmitted && f['firstName'].errors" class="invalid-feedback">
-                  <span *ngIf="f['firstName'].errors['required']">Il nome è obbligatorio</span>
-                  <span *ngIf="f['firstName'].errors['minlength']">Il nome deve avere almeno 2 caratteri</span>
+                  <span *ngIf="f['firstName'].errors['required']">{{ 'SIGNUP.FIRST_NAME_REQ' | translate }}</span>
+                  <span *ngIf="f['firstName'].errors['minlength']">{{ 'SIGNUP.FIRST_NAME_MIN' | translate }}</span>
                 </div>
               </div>
               
               <div class="col-md-6 mb-4">
-                <label for="lastName" class="form-label">Cognome</label>
+                <label for="lastName" class="form-label">{{ 'SIGNUP.LAST_NAME' | translate }}</label>
                 <input type="text" id="lastName" formControlName="lastName" class="form-control" 
-                       [ngClass]="{ 'is-invalid': isSubmitted && f['lastName'].errors }" placeholder="Es. Rossi">
+                       [ngClass]="{ 'is-invalid': isSubmitted && f['lastName'].errors }" [placeholder]="'SIGNUP.LAST_NAME_PH' | translate">
                 <div *ngIf="isSubmitted && f['lastName'].errors" class="invalid-feedback">
-                  <span *ngIf="f['lastName'].errors['required']">Il cognome è obbligatorio</span>
-                  <span *ngIf="f['lastName'].errors['minlength']">Il cognome deve avere almeno 2 caratteri</span>
+                  <span *ngIf="f['lastName'].errors['required']">{{ 'SIGNUP.LAST_NAME_REQ' | translate }}</span>
+                  <span *ngIf="f['lastName'].errors['minlength']">{{ 'SIGNUP.LAST_NAME_MIN' | translate }}</span>
                 </div>
               </div>
             </div>
 
             <div class="mb-4">
-              <label for="signupEmail" class="form-label">Email</label>
+              <label for="signupEmail" class="form-label">{{ 'LOGIN.EMAIL' | translate }}</label>
               <input type="email" id="signupEmail" formControlName="email" class="form-control" 
-                     [ngClass]="{ 'is-invalid': isSubmitted && f['email'].errors }" placeholder="nome@esempio.com">
+                     [ngClass]="{ 'is-invalid': isSubmitted && f['email'].errors }" [placeholder]="'LOGIN.EMAIL_PH' | translate">
               <div *ngIf="isSubmitted && f['email'].errors" class="invalid-feedback">
-                <span *ngIf="f['email'].errors['required']">L'email è obbligatoria</span>
-                <span *ngIf="f['email'].errors['email']">Inserisci un indirizzo email valido</span>
+                <span *ngIf="f['email'].errors['required']">{{ 'LOGIN.EMAIL_REQ' | translate }}</span>
+                <span *ngIf="f['email'].errors['email']">{{ 'LOGIN.EMAIL_INV' | translate }}</span>
               </div>
             </div>
             
             <div class="mb-4">
-              <label for="signupPassword" class="form-label">Password</label>
+              <label for="signupPassword" class="form-label">{{ 'LOGIN.PWD' | translate }}</label>
               <input type="password" id="signupPassword" formControlName="password" class="form-control" 
-                     [ngClass]="{ 'is-invalid': isSubmitted && f['password'].errors }" placeholder="Minimo 8 caratteri">
+                     [ngClass]="{ 'is-invalid': isSubmitted && f['password'].errors }" [placeholder]="'LOGIN.PWD_PH' | translate">
               <div *ngIf="isSubmitted && f['password'].errors" class="invalid-feedback">
-                <span *ngIf="f['password'].errors['required']">La password è obbligatoria</span>
-                <span *ngIf="f['password'].errors['minlength']">La password deve avere almeno 8 caratteri</span>
+                <span *ngIf="f['password'].errors['required']">{{ 'LOGIN.PWD_REQ' | translate }}</span>
+                <span *ngIf="f['password'].errors['minlength']">{{ 'LOGIN.PWD_MIN' | translate }}</span>
               </div>
             </div>
 
@@ -73,28 +73,28 @@
               <input type="checkbox" class="form-check-input" id="terms" formControlName="terms"
                      [ngClass]="{ 'is-invalid': isSubmitted && f['terms'].errors }">
               <label class="form-check-label text-muted ms-1" for="terms">
-                Accetto i <a href="#" class="text-decoration-none fw-semibold" style="color: var(--primary-accent);">Termini di servizio</a> e la Privacy Policy
+                {{ 'SIGNUP.TERMS' | translate }}
               </label>
               <div *ngIf="isSubmitted && f['terms'].errors" class="invalid-feedback">
-                Devi accettare i termini per registrarti
+                {{ 'SIGNUP.TERMS_REQ' | translate }}
               </div>
             </div>
             
-            <button type="submit" class="btn btn-primary w-100 py-3 mb-4 fw-bold fs-5">
-              Crea Account
+            <button type="submit" class="btn btn-primary w-100 py-3 mb-4 fw-bold fs-5" style="border-radius: 50px;">
+              {{ 'SIGNUP.BTN' | translate }}
             </button>
           </form>
 
           <div class="text-center" *ngIf="!isSuccess">
-            <span class="text-muted">Hai già un account? </span>
+            <span class="text-muted">{{ 'SIGNUP.HAVE_ACCOUNT' | translate }} </span>
             <a routerLink="/login" class="text-decoration-none fw-semibold" style="color: var(--primary-accent);">
-              Accedi
+              {{ 'SIGNUP.LOGIN_NOW' | translate }}
             </a>
           </div>
           
           <div class="text-center" *ngIf="isSuccess">
             <a routerLink="/login" class="btn btn-outline-primary w-100 py-3 fw-bold fs-5" style="border-radius: var(--border-radius-extreme);">
-              Vai al Login
+              {{ 'SIGNUP.GO_LOGIN' | translate }}
             </a>
           </div>
           

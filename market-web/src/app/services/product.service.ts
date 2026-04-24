@@ -8,6 +8,7 @@ export interface Product {
   price: number;        // Prezzo in euro
   description: string;  // Descrizione dettagliata del prodotto
   section: string;      // Sezione/categoria di appartenenza
+  quantity: number;     // Quantità disponibile
   subsection?: string;   // Sottosezione (opzionale) per ulteriori dettagli di categorizzazione
 }
 
@@ -70,11 +71,25 @@ export class ProductService {
     const currentProducts = this.getProducts();
     // Genera un ID univoco incrementale (max ID + 1)
     const newId = currentProducts.length > 0 ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
-    // Crea il prodotto completo e lo aggiunge alla lista
-    const newProduct = { ...product, id: newId };
+    // Crea il prodotto completo e lo aggiunge alla lista, garantendo una quantità iniziale
+    const newProduct = { ...product, id: newId, quantity: product.quantity ?? 0 };
     const updatedProducts = [...currentProducts, newProduct];
     
     // Persiste i cambiamenti e notifica i subscribers
+    this.saveToStorage(updatedProducts);
+    this.productsSubject.next(updatedProducts);
+  }
+
+  // Aggiorna la quantità di un prodotto
+  updateQuantity(id: number, delta: number) {
+    const currentProducts = this.getProducts();
+    const updatedProducts = currentProducts.map(p => {
+      if (p.id === id) {
+        const newQuantity = Math.max(0, (p.quantity || 0) + delta);
+        return { ...p, quantity: newQuantity };
+      }
+      return p;
+    });
     this.saveToStorage(updatedProducts);
     this.productsSubject.next(updatedProducts);
   }

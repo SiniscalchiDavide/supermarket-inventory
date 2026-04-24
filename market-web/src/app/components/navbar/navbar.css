@@ -110,10 +110,11 @@
 /* Lista contenente i risultati di ricerca */
 .search-results-list {
   background: rgba(255, 255, 255, 0.75);    /* Bianco semi-trasparente */
-  border: 1px solid var(--border-color);    /* Bordo sottile */
-  border-radius: 8px;                       /* Angoli arrotondati */
-  backdrop-filter: blur(10px);              /* Effetto blur dietro */
-  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);     /* Bordo sottile chiaro */
+  border-radius: 16px;                      /* Angoli arrotondati maggiorati */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -124,71 +125,79 @@
 .search-result-item {
   cursor: pointer;                           /* Indica che è cliccabile */
   transition: all 0.2s ease;                /* Animazione smooth al hover */
-  background-color: var(--bg-secondary);    /* Sfondo principale */
+  background-color: transparent;            /* Sfondo trasparente di base */
+  border-radius: 12px !important;           /* Arrotondamento stile Apple */
+  margin: 4px 8px;                          /* Spaziatura per separare gli elementi */
+  width: calc(100% - 16px) !important;      /* Compensa il margin */
 }
 
-/* Hover effect: cambia colore di sfondo */
+/* Hover effect: cambia colore di sfondo e aggiunge scale e opacity per micro-interazione */
 .search-result-item:hover {
-  background-color: var(--bg-tertiary);     /* Sfondo più scuro/evidenziato */
+  background-color: rgba(0, 0, 0, 0.05);    /* Sfondo più scuro/evidenziato */
+  transform: scale(0.97);                   /* Effetto click morbido e reattivo */
+  opacity: 0.9;
 }
 
 /* Primo elemento: arrotonda angoli superiori */
 .search-result-item:first-child {
-  border-radius: 8px 8px 0 0;
+  /* margin-top: 8px; */
 }
 
 /* Ultimo elemento: arrotonda angoli inferiori (se non è il pulsante "Vedi altri") */
 .search-result-item:last-of-type:not(.btn-outline-primary) {
-  border-radius: 0 0 8px 8px;
+  /* margin-bottom: 8px; */
 }
 
 /* ===== DARK MODE STYLES ===== */
 
 /* Lista risultati in dark mode */
-[data-bs-theme='dark'] .search-results-list {
-  background: linear-gradient(180deg, #1a1d23 0%, #212529 100%);  /* Gradiente scuro */
-  border: 1px solid rgba(0, 123, 255, 0.3);                       /* Bordo blu scuro */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+:host-context([data-theme='dark']) .search-results-list,
+::ng-deep [data-theme='dark'] .search-results-list {
+  background: rgba(28, 28, 30, 0.8);                              /* Sfondo scuro semitrasparente */
+  border: 1px solid rgba(255, 255, 255, 0.1);                     /* Bordo chiaro sottile */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 /* Singolo risultato in dark mode */
-[data-bs-theme='dark'] .search-result-item {
+:host-context([data-theme='dark']) .search-result-item,
+::ng-deep [data-theme='dark'] .search-result-item {
   background-color: transparent;              /* Sfondo trasparente */
   color: #e9ecef;                             /* Testo grigio chiaro */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);  /* Separatore sottile */
+  border-bottom: none;                        /* Rimosso separatore per design più pulito */
   transition: all 0.2s ease;
 }
 
-/* Rimuove il separatore dall'ultimo elemento */
-[data-bs-theme='dark'] .search-result-item:last-child {
-  border-bottom: none;
-}
-
-/* Hover effect in dark mode: sfondo leggermente blu */
-[data-bs-theme='dark'] .search-result-item:hover {
-  background-color: rgba(0, 123, 255, 0.1);
+/* Hover effect in dark mode: sfondo leggermente bianco */
+:host-context([data-theme='dark']) .search-result-item:hover,
+::ng-deep [data-theme='dark'] .search-result-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Testo forte (nome del risultato) in dark mode */
-[data-bs-theme='dark'] .search-result-item strong {
+:host-context([data-theme='dark']) .search-result-item strong,
+::ng-deep [data-theme='dark'] .search-result-item strong {
   color: white;                               /* Bianco per il nome */
 }
 
 /* Testo muted (descrizione) in dark mode */
-[data-bs-theme='dark'] .search-result-item .text-muted {
+:host-context([data-theme='dark']) .search-result-item .text-muted,
+::ng-deep [data-theme='dark'] .search-result-item .text-muted {
   color: rgba(255, 255, 255, 0.5) !important;  /* Grigio semi-trasparente */
 }
 
 /* ===== "VEDIaltri" BUTTON - DARK MODE ===== */
 /* Stile del pulsante "Vedi altri" in dark mode */
-[data-bs-theme='dark'] .btn-outline-primary {
+:host-context([data-theme='dark']) .btn-outline-primary,
+::ng-deep [data-theme='dark'] .btn-outline-primary {
   color: var(--primary-accent);               /* Testo blu */
   border-color: rgba(0, 123, 255, 0.3);      /* Bordo blu scuro */
 }
 
 /* Hover del pulsante "Vedi altri" in dark mode */
-[data-bs-theme='dark'] .btn-outline-primary:hover {
+:host-context([data-theme='dark']) .btn-outline-primary:hover,
+::ng-deep [data-theme='dark'] .btn-outline-primary:hover {
   background-color: rgba(0, 123, 255, 0.1);  /* Sfondo blu scuro */
   border-color: var(--primary-accent);        /* Bordo blu pieno */
 }

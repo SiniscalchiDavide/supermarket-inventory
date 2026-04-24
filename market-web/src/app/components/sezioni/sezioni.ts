@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 // Componente Sezioni: mostra le categorie principali di prodotti
 // Usato nella home page per navigare alle diverse sezioni del negozio
 @Component({
   selector: 'app-sezioni',                    // Selettore: <app-sezioni></app-sezioni>
-  imports: [CommonModule, RouterLink],       // Importa direttive comuni (*ngFor, [routerLink])
+  imports: [CommonModule, RouterLink, TranslatePipe],       // Importa direttive comuni (*ngFor, [routerLink])
   templateUrl: './sezioni.html',             // Template HTML
   styleUrl: './sezioni.css'                  // Stili CSS specifici del componente
 })

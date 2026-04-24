@@ -1,21 +1,22 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
 import { ProductDetail } from '../product-detail/product-detail';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 // Componente principale che visualizza la lista di prodotti e gestisce il form di aggiunta
 @Component({
   selector: 'app-product-list',
-  imports: [CommonModule, ReactiveFormsModule, ProductDetail],
+  imports: [CommonModule, ReactiveFormsModule, ProductDetail, TranslatePipe],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush  // Ottimizzazione: rileva cambiamenti solo su input/eventi
 })
 export class ProductList implements OnInit {
-  // Iniezione di dipendenze: accesso ai servizi tramite inject()
+  // Inietta i servizi necessari
   private productService = inject(ProductService);
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
@@ -31,7 +32,7 @@ export class ProductList implements OnInit {
   productForm!: FormGroup;
   
   // Lista delle sezioni disponibili nel dropdown del form
-  sezioni: string[] = ['Alimentari e bevande', 'Giocattoli', 'Elettronica', 'Beauty', 'Altro'];
+  sezioni: string[] = ['Alimentari', 'Giocattoli', 'Elettronica', 'Beauty', 'Altro'];
   
   // Testo visualizzato nel dropdown (si aggiorna quando l'utente sceglie)
   sezioneSelezionataText: string = 'Seleziona una sezione...';
@@ -43,11 +44,12 @@ export class ProductList implements OnInit {
     
     // Crea il form reattivo con validatori su ogni campo
     this.productForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      price: ['', [Validators.required, Validators.min(0.01)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-      section: ['', Validators.required]
-    });
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    price: ['', [Validators.required, Validators.min(0.01)]],
+    description: ['', [Validators.required, Validators.minLength(10)]],
+    section: ['', [Validators.required]],
+    quantity: [0, [Validators.min(0)]]
+  });
 
     // Ascolta i query params della rotta (es. productId, scroll)
     // Usato quando si naviga da ricerca a catalogo con prodotto selezionato
@@ -92,8 +94,9 @@ export class ProductList implements OnInit {
   // Aggiorna il text del dropdown quando l'utente seleziona una sezione
   selezionaSezioneDalDropdown(sezione: string) {
     this.sezioneSelezionataText = sezione;
-    // Converte il nome leggibile in formato slug (minuscolo, trattini)
-    this.productForm.get('section')?.setValue(sezione.toLowerCase().replace(/ /g, '-'));
+    // Converte il nome leggibile in formato slug, gestendo il caso specifico di Alimentari
+    const slug = sezione === 'Alimentari' ? 'alimentari-e-bevande' : sezione.toLowerCase().replace(/ /g, '-');
+    this.productForm.get('section')?.setValue(slug);
     this.productForm.get('section')?.markAsTouched();
   }
 
@@ -121,6 +124,10 @@ export class ProductList implements OnInit {
       this.productForm.reset();
       this.sezioneSelezionataText = 'Seleziona una sezione...';
     }
+  }
+
+  updateQuantity(id: number, delta: number) {
+    this.productService.updateQuantity(id, delta);
   }
 
   // Callback quando il componente figlio ProductDetail emette un evento delete

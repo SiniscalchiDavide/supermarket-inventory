@@ -2,8 +2,8 @@
   <!-- Riga con il titolo principale della sezione -->
   <div class="row">
     <div class="col-12 text-center mb-5">
-      <h2 class="display-4 fw-bold text-capitalize">Beauty</h2>
-      <p class="text-muted">Esplora tutti i prodotti della categoria Beauty</p>
+      <h2 class="display-4 fw-bold text-capitalize">{{ 'SECTIONS.BEAUTY' | translate }}</h2>
+      <p class="text-muted">{{ 'SECTIONS.BEAUTY_DESC' | translate }}</p>
     </div>
   </div>
   
@@ -26,15 +26,15 @@
       <div class="card p-5 text-center empty-state-card">
         <!-- L'icona con le stelle è specifica di questa sezione (Bootstraps Icons: bi-stars) -->
         <i class="bi bi-stars display-1 text-muted mb-3"></i>
-        <h4 class="mb-2">Nessun prodotto trovato</h4>
-        <p class="text-muted mb-0">L'elenco dei prodotti per questa sezione è attualmente vuoto.</p>
+        <h4 class="mb-2">{{ 'SECTION.EMPTY' | translate }}</h4>
+        <p class="text-muted mb-0">{{ 'SECTION.EMPTY_DESC' | translate }}</p>
       </div>
     </div>
     
     <!-- *ngFor ripete questa "colonna" tante volte quanti sono i prodotti trovati -->
     <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let product of products">
       <!-- Ogni prodotto viene visualizzato dentro una .card che prende tutta l'altezza (h-100) per pareggiarsi con le altre sulla riga -->
-      <div class="card h-100 p-4">
+      <div class="card h-100 p-4" style="cursor: pointer;" (click)="openPanel(product)">
         <!-- Mostriamo il nome della variabile usando {{ string interpolation }} -->
         <h3 class="h5 fw-bold">{{ product.name }}</h3>
         <!-- Pipe 'currency' per la valuta -->

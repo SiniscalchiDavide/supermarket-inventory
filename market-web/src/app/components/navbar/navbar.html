@@ -25,9 +25,9 @@
         <!-- Componente Sezioni: mostra le categorie di prodotti (Alimentari, Giocattoli, etc.) -->
         <app-sezioni></app-sezioni>
 
-        <!-- Link Catalogo: accede alla pagina principale dei prodotti -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/info" routerLinkActive="active">Catalogo</a>
+        <!-- Link Catalogo: accede alla pagina principale dei prodotti (solo admin) -->
+        <li class="nav-item" *ngIf="isAdmin()">
+          <a class="nav-link" routerLink="/info" routerLinkActive="active">{{ 'NAV.CATALOG' | translate }}</a>
         </li>
       </ul>
 
@@ -52,7 +52,7 @@
               *ngIf="isSearchOpen"
               type="text" 
               class="form-control search-input search-input-animate" 
-              placeholder="Cerca pagine o prodotti..." 
+              [placeholder]="'NAV.SEARCH' | translate" 
               [(ngModel)]="searchQuery"
               (input)="onSearchInput()"
               [ngClass]="{ 'search-input-dark': isDarkTheme() }"
@@ -117,25 +117,10 @@
           <!-- MESSAGGIO NESSUN RISULTATO: mostrato quando non ci sono corrispondenze -->
           <div class="search-dropdown position-absolute" *ngIf="isSearchOpen && searchQuery.trim() !== '' && displayedResults.length === 0">
             <div class="search-results-list shadow-lg px-3 py-2" style="min-width: 250px;">
-              <p class="text-muted mb-0">Nessun risultato trovato per "{{ searchQuery }}"</p>
+              <p class="text-muted mb-0">{{ 'NAV.NO_RESULTS' | translate }} "{{ searchQuery }}"</p>
             </div>
           </div>
         </div>
-
-        <!-- ICONA CARRELLO (attualmente finta, non funzionante) 
-             - Design e-commerce standard con badge numerico rosso
-             - Badge mostra il numero di articoli (attualmente hardcoded a 0)
-        -->
-        <button class="btn btn-icon-blur rounded-circle p-2 d-flex justify-content-center align-items-center position-relative" 
-                style="width: 40px; height: 40px; border-radius: 50% !important; padding: 0 !important;" 
-                aria-label="Carrello">
-          <i class="bi bi-cart3"></i>
-          <!-- Badge numerico (classico pattern e-commerce) -->
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-            0
-            <span class="visually-hidden">prodotti nel carrello</span>
-          </span>
-        </button>
 
         <!-- PULSANTE TEMA (Giorno/Notte)
              - Click su toggleTheme() per commutare light/dark mode
@@ -152,7 +137,7 @@
 
         <!-- DROPDOWN LINGUA (Italiano/English)
              - Custom dropdown con Bootstrap data-bs-toggle
-             - Attualmente solo per show (non cambia veramente la lingua)
+             - Click cambia la lingua tramite changeLanguage()
              - Check icon mostra la lingua selezionata
         -->
         <div class="dropdown custom-dropdown-wrapper">
@@ -167,11 +152,14 @@
           </button>
           <!-- Menu dropdown con opzioni lingua -->
           <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="languageDropdown">
-            <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="$event.preventDefault()">
+            <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="$event.preventDefault(); changeLanguage('it')">
               <span>Italiano</span> 
-              <i class="bi bi-check" style="color: var(--primary-accent);"></i>
+              <i class="bi bi-check" *ngIf="getCurrentLang() === 'it'" style="color: var(--primary-accent);"></i>
             </a></li>
-            <li><a class="dropdown-item" href="#" (click)="$event.preventDefault()">English</a></li>
+            <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="$event.preventDefault(); changeLanguage('en')">
+              <span>English</span>
+              <i class="bi bi-check" *ngIf="getCurrentLang() === 'en'" style="color: var(--primary-accent);"></i>
+            </a></li>
           </ul>
         </div>
 
@@ -179,8 +167,8 @@
              - Condizionale: mostra "Accedi" se NON loggato, "Esci" se loggato
              - Colori diversi: primary (accedi) vs danger (esci)
         -->
-        <button *ngIf="!isLoggedIn()" class="btn btn-primary" routerLink="/login">Accedi / Registrati</button>
-        <button *ngIf="isLoggedIn()" class="btn btn-danger" (click)="logout()">Esci</button>
+        <button *ngIf="!isLoggedIn()" class="btn btn-primary" routerLink="/login">{{ 'NAV.LOGIN' | translate }}</button>
+        <button *ngIf="isLoggedIn()" class="btn btn-danger" (click)="logout()">{{ 'NAV.LOGOUT' | translate }}</button>
       </div>
     </div>
   </div>

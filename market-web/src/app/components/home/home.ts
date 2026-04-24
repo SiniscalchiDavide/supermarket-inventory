@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { AuthService } from '../../services/auth.service';
 
 // Componente Home: pagina iniziale dell'applicazione
 // Contiene un semplice messaggio di benvenuto e un pulsante per navigare ai prodotti
@@ -12,16 +13,28 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
   styleUrl: './home.css'          // Stili CSS specifici del componente
 })
 export class Home {
-  // Inietta il Router per la navigazione tra le pagine
-  constructor(private router: Router) {}
+  // Inietta il Router e AuthService per la navigazione tra le pagine e logica di auth
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
-  // Naviga alla pagina dei prodotti (/info) e scrolls dolcemente in alto
-  // Richiamato dal bottone "Vedi i prodotti" nel template
+  // Metodo per controllare se l'utente è amministratore (usato per nascondere il bottone)
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // Gestisce la logica condizionale del pulsante "Scopri i nostri prodotti"
   vaiAiProdotti() {
-    // navigate() ritorna una Promise che si risolve quando la navigazione è completata
-    this.router.navigate(['/info']).then(() => {
-      // Dopo la navigazione, scrolls all'inizio della pagina con effetto smooth
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    // Se non è loggato -> va alla pagina di login
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']).then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    } 
+    // Se è loggato ma non è admin -> va alla pagina dei giocattoli
+    else if (!this.authService.isAdmin()) {
+      this.router.navigate(['/sezione/giocattoli']).then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 }

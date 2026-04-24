@@ -7,6 +7,16 @@
     </div>
   </div>
   
+<div class="row mb-4">
+  <div class="col-12 text-center">
+    <div class="btn-group shadow-sm" role="group" aria-label="Filtri Beauty">
+      <button type="button" class="btn btn-primary" (click)="filterBy('all')">Tutti</button>
+      <button type="button" class="btn btn-primary" (click)="filterBy('skincare')">Skincare</button>
+      <button type="button" class="btn btn-primary" (click)="filterBy('makeup')">Make-up</button>
+    </div>
+  </div>
+</div>
+
   <!-- Usiamo la pipe 'async' di Angular. "Srotola" i dati dall'Observable products$ 
        e crea una variabile locale chiamata 'products' che è un normale array -->
   <div class="row" *ngIf="(products$ | async) as products">

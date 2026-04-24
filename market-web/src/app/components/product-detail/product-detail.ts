@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../services/product.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 // Componente figlio che visualizza i dettagli di un singolo prodotto
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush  // Rileva cambiamenti solo su input/eventi, non su cambiamenti esterni

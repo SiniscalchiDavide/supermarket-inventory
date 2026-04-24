@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 // Componente Home: pagina iniziale dell'applicazione
-// Fornisce una landing page con link ai prodotti
+// Contiene un semplice messaggio di benvenuto e un pulsante per navigare ai prodotti
 @Component({
   selector: 'app-home',           // Selettore: <app-home></app-home>
-  imports: [],                    // Non importa altri componenti
+  imports: [CommonModule, TranslatePipe],                    // Non importa altri componenti
   templateUrl: './home.html',     // Template HTML
   styleUrl: './home.css'          // Stili CSS specifici del componente
 })

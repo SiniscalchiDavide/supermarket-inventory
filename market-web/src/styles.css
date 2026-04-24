@@ -84,6 +84,22 @@ main {
   z-index: 1;
 }
 
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth page transitions for components rendered inside main (router-outlet) */
+main > * {
+  animation: pageFadeIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
 app-footer {
   display: block;
   width: 100%;
@@ -100,13 +116,13 @@ app-footer {
   outline-offset: 2px !important;
 }
 
+/* Micro-interactions per card */
 .card {
   border-radius: var(--card-radius) !important;
   border: none;
   background-color: var(--card-bg);
   box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
-  /* Aggiunto blur stile Apple a tutte le card */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
@@ -123,6 +139,86 @@ app-footer {
 
 [data-theme="dark"] .card:hover {
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* Animazioni di entrata per i menu dropdown */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dropdown Menu Glassmorphism */
+.dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  
+  /* Aggiunta animazione quando il menu riceve la classe .show da Bootstrap */
+  display: none; /* Sovrascrive il default per gestire l'animazione */
+}
+
+.dropdown-menu.show {
+  display: block;
+  animation: dropdownFadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transform-origin: top center;
+}
+
+[data-theme="dark"] .dropdown-menu {
+  background-color: rgba(28, 28, 30, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.dropdown-item {
+  color: var(--text-color);
+  border-radius: 8px;
+  margin: 4px 8px;
+  width: calc(100% - 16px);
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .dropdown-item:hover, [data-theme="dark"] .dropdown-item:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Stili per le liste di bottoni e search results per coerenza visiva */
+.list-group-item {
+  border-radius: var(--card-radius) !important;
+  margin-bottom: 10px;
+  border: none;
+  background-color: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .list-group-item {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+}
+
+.list-group-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] .list-group-item:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  background-color: var(--product-hover-bg);
 }
 
 /* Bottoni Accent con Blur */

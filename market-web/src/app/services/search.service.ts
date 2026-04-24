@@ -54,7 +54,7 @@ export class SearchService {
         id: product.id,
         name: product.name,
         description: product.description,
-        route: `/info/${product.id}`
+        route: `/sezione/${product.section}`
       }))
       .filter(product =>
         product.name.toLowerCase().includes(lowerQuery)

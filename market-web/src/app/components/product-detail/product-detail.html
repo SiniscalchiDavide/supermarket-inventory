@@ -1,7 +1,7 @@
 <div *ngIf="!product" class="card p-5 text-center text-muted">
   <i class="bi bi-info-circle display-4 mb-3"></i>
-  <h4>Nessun prodotto selezionato</h4>
-  <p>Clicca su un prodotto nella lista per vederne i dettagli.</p>
+  <h4>{{ 'DETAIL.NO_SELECTION' | translate }}</h4>
+  <p>{{ 'DETAIL.SELECT' | translate }}</p>
 </div>
 
 <div *ngIf="product" class="card shadow-sm">
@@ -17,13 +17,13 @@
     <hr>
     
     <div class="mb-4 mt-4">
-      <h5 class="text-muted mb-2">Descrizione:</h5>
-      <p class="card-text fs-5">{{ product.description }}</p>
+      <h5 class="text-muted mb-2">{{ 'PRODUCT.DESC' | translate }}</h5>
+      <p class="card-text fs-5" style="color: var(--text-color);">{{ product.description }}</p>
     </div>
     
     <div class="d-grid mt-4">
-      <button class="btn btn-danger" (click)="elimina()">
-        <i class="bi bi-trash me-2"></i>Elimina Prodotto
+      <button class="btn btn-danger" style="border-radius: 50px;" (click)="elimina()">
+        <i class="bi bi-trash me-2"></i>{{ 'DETAIL.DELETE' | translate }}
       </button>
     </div>
   </div>

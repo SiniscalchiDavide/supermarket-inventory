@@ -8,6 +8,7 @@ export interface Product {
   price: number;        // Prezzo in euro
   description: string;  // Descrizione dettagliata del prodotto
   section: string;      // Sezione/categoria di appartenenza
+  quantity: number;     // Quantità disponibile
 }
 
 // Servizio singleton per gestire i prodotti: carica, aggiunge, elimina e persiste in localStorage
@@ -21,11 +22,11 @@ export class ProductService {
 
   // Array di 5 prodotti predefiniti da mostrare al primo caricamento
   private initialProducts: Product[] = [
-    { id: 1, name: 'Pane Integrale', price: 2.50, description: 'Pane fresco integrale', section: 'alimentari-e-bevande' },
-    { id: 2, name: 'Latte', price: 1.20, description: 'Latte intero fresco', section: 'alimentari-e-bevande' },
-    { id: 3, name: 'Cuffie Bluetooth', price: 150.00, description: 'Cuffie con cancellazione del rumore', section: 'elettronica' },
-    { id: 4, name: 'Crema Viso', price: 25.00, description: 'Crema idratante per il viso', section: 'beauty' },
-    { id: 5, name: 'Lego Star Wars', price: 120.00, description: 'Set di costruzioni spaziali', section: 'giocattoli' }
+    { id: 1, name: 'Pane Integrale', price: 2.50, description: 'Pane fresco integrale', section: 'alimentari-e-bevande', quantity: 10 },
+    { id: 2, name: 'Latte', price: 1.20, description: 'Latte intero fresco', section: 'alimentari-e-bevande', quantity: 20 },
+    { id: 3, name: 'Cuffie Bluetooth', price: 150.00, description: 'Cuffie con cancellazione del rumore', section: 'elettronica', quantity: 5 },
+    { id: 4, name: 'Crema Viso', price: 25.00, description: 'Crema idratante per il viso', section: 'beauty', quantity: 15 },
+    { id: 5, name: 'Lego Star Wars', price: 120.00, description: 'Set di costruzioni spaziali', section: 'giocattoli', quantity: 8 }
   ];
 
   // BehaviorSubject che emette l'array aggiornato di prodotti ogni volta che cambia
@@ -69,11 +70,25 @@ export class ProductService {
     const currentProducts = this.getProducts();
     // Genera un ID univoco incrementale (max ID + 1)
     const newId = currentProducts.length > 0 ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
-    // Crea il prodotto completo e lo aggiunge alla lista
-    const newProduct = { ...product, id: newId };
+    // Crea il prodotto completo e lo aggiunge alla lista, garantendo una quantità iniziale
+    const newProduct = { ...product, id: newId, quantity: product.quantity ?? 0 };
     const updatedProducts = [...currentProducts, newProduct];
     
     // Persiste i cambiamenti e notifica i subscribers
+    this.saveToStorage(updatedProducts);
+    this.productsSubject.next(updatedProducts);
+  }
+
+  // Aggiorna la quantità di un prodotto
+  updateQuantity(id: number, delta: number) {
+    const currentProducts = this.getProducts();
+    const updatedProducts = currentProducts.map(p => {
+      if (p.id === id) {
+        const newQuantity = Math.max(0, (p.quantity || 0) + delta);
+        return { ...p, quantity: newQuantity };
+      }
+      return p;
+    });
     this.saveToStorage(updatedProducts);
     this.productsSubject.next(updatedProducts);
   }

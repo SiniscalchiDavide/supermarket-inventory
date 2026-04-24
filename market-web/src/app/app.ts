@@ -3,12 +3,14 @@ import { RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Navbar } from './components/navbar/navbar';
 import { Footer } from './components/footer/footer';
+import { Modal } from './components/modal/modal';
+import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { SearchStateService } from './services/search-state.service';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, Navbar, Footer],
+  imports: [CommonModule, RouterOutlet, Navbar, Footer, Modal, SidePanelComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

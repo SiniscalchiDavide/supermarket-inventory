@@ -2,8 +2,8 @@
   <!-- Intestazione della pagina di sezione -->
   <div class="row">
     <div class="col-12 text-center mb-5">
-      <h2 class="display-4 fw-bold text-capitalize">Alimentari e Bevande</h2>
-      <p class="text-muted">Esplora tutti i prodotti della categoria Alimentari e Bevande</p>
+      <h2 class="display-4 fw-bold text-capitalize">{{ 'SECTIONS.ALIMENTARI' | translate }}</h2>
+      <p class="text-muted">{{ 'SECTIONS.ALIMENTARI_DESC' | translate }}</p>
     </div>
   </div>
   
@@ -14,15 +14,15 @@
     <div class="col-12" *ngIf="products.length === 0">
       <div class="card p-5 text-center empty-state-card">
         <i class="bi bi-basket display-1 text-muted mb-3"></i>
-        <h4 class="mb-2">Nessun prodotto trovato</h4>
-        <p class="text-muted mb-0">L'elenco dei prodotti per questa sezione è attualmente vuoto.</p>
+        <h4 class="mb-2">{{ 'SECTION.EMPTY' | translate }}</h4>
+        <p class="text-muted mb-0">{{ 'SECTION.EMPTY_DESC' | translate }}</p>
       </div>
     </div>
     
     <!-- Questo blocco è un ciclo: *ngFor genera una Card (un quadratino) per ogni singolo prodotto che trova -->
     <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let product of products">
       <!-- Usiamo h-100 per far sì che tutte le card in una riga siano alte uguali, indipendentemente dalla lunghezza del testo -->
-      <div class="card h-100 p-4">
+      <div class="card h-100 p-4" style="cursor: pointer;" (click)="openPanel(product)">
         <!-- Stampiamo i dati del prodotto usando le doppie graffe {{ }} (String Interpolation) -->
         <h3 class="h5 fw-bold">{{ product.name }}</h3>
         <!-- Usiamo una Pipe di Angular (currency:'EUR') per formattare il numero come prezzo con l'Euro -->

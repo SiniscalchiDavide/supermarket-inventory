@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 // Componente Signup: pagina per registrare un nuovo account
 // Usa reactive forms (FormGroup + FormBuilder) con validatori multipli
 @Component({
   selector: 'app-signup',                             // Selettore: <app-signup></app-signup>
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],  // Moduli: direttive, form reattivi, routing
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],  // Moduli: direttive, form reattivi, routing
   templateUrl: './signup.html',                      // Template HTML con form di registrazione
   styleUrl: './signup.css'                           // Stili CSS specifici
 })

@@ -7,12 +7,16 @@ import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../services/auth.service';
 import { SearchService, SearchResult } from '../../services/search.service';
 import { SearchStateService } from '../../services/search-state.service';
+import { ProductService } from '../../services/product.service';
+import { SidePanelService } from '../../services/side-panel.service';
+import { I18nService, Lang } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { FormsModule } from '@angular/forms';
 
 // Componente navbar con ricerca, login, tema e navigazione principale
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, RouterLinkActive, Sezioni, FormsModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, Sezioni, FormsModule, TranslatePipe],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -25,6 +29,9 @@ export class Navbar implements OnInit {
   authService = inject(AuthService);
   searchService = inject(SearchService);
   searchStateService = inject(SearchStateService);
+  productService = inject(ProductService);
+  sidePanelService = inject(SidePanelService);
+  i18nService = inject(I18nService);
   router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
@@ -82,9 +89,24 @@ export class Navbar implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  // Restituisce true se l'utente è admin
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
   // Effettua il logout dell'utente corrente
   logout() {
     this.authService.logout();
+  }
+
+  // Cambia la lingua dell'applicazione
+  changeLanguage(lang: Lang) {
+    this.i18nService.setLang(lang);
+  }
+
+  // Restituisce la lingua corrente
+  getCurrentLang(): Lang {
+    return this.i18nService.currentLang;
   }
 
   // Restituisce il nome completo dell'utente autenticato
@@ -160,9 +182,14 @@ export class Navbar implements OnInit {
     if (result.type === 'page') {
       // Naviga direttamente alla pagina
       this.router.navigate([result.route]);
-    } else if (result.type === 'product') {
-      // Naviga al catalogo con queryParams per selezionare e scrollare il prodotto
-      this.router.navigate(['/info'], { queryParams: { productId: result.id, scroll: 'true' } });
+    } else if (result.type === 'product' && result.route) {
+      // Naviga direttamente alla sezione corretta, poi apre il side panel del prodotto
+      this.router.navigate([result.route]).then(() => {
+        const product = this.productService.getProducts().find(p => p.id === result.id);
+        if (product) {
+          this.sidePanelService.openPanel(product);
+        }
+      });
     }
     // Chiude la barra di ricerca dopo la navigazione
     this.closeSearch();

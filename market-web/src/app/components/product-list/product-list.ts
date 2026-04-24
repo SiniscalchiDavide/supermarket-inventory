@@ -101,6 +101,12 @@ export class ProductList implements OnInit {
     this.productForm.get('section')?.markAsTouched();
   }
 
+  // Seleziona la sottosezione (skincare/makeup) tramite il dropdown personalizzato
+  selezionaSubSection(sub: string) {
+    this.productForm.get('subsection')?.setValue(sub);
+    this.productForm.get('subsection')?.markAsTouched();
+  }
+
   // Seleziona un prodotto dalla lista per mostrare i dettagli a destra
   selezioneProdotto(product: Product) {
     this.selectedProduct = product;

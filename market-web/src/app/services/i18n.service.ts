@@ -25,6 +25,9 @@ export const DICTIONARY: Record<Lang, Record<string, string>> = {
     'PRODUCT.AVAIL': 'Quantità disponibile:',
     'FOOTER.CREDITS': 'Crediti: NyxKy, Alexandra, Davide, Viju',
 
+    'GUARD.DENIED_TITLE': 'Accesso Negato',
+    'GUARD.DENIED_MSG': 'Devi accedere o creare un account per continuare.',
+
     'SECTIONS.TITLE': 'Sezioni',
     'SECTIONS.ALIMENTARI': 'Alimentari e Bevande',
     'SECTIONS.ALIMENTARI_DESC': 'Esplora tutti i prodotti della categoria Alimentari e Bevande',
@@ -109,6 +112,9 @@ export const DICTIONARY: Record<Lang, Record<string, string>> = {
     'PRODUCT.CAT': 'Category:',
     'PRODUCT.AVAIL': 'Available quantity:',
     'FOOTER.CREDITS': 'Credits: NyxKy, Alexandra, Davide, Viju',
+
+    'GUARD.DENIED_TITLE': 'Access Denied',
+    'GUARD.DENIED_MSG': 'You must login or create an account to continue.',
 
     'SECTIONS.TITLE': 'Sections',
     'SECTIONS.ALIMENTARI': 'Food & Beverages',

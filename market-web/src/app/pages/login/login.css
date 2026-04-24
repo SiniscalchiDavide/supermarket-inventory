@@ -23,6 +23,16 @@
   color: #FFFFFF !important; /* Bianco assoluto */
 }
 
+/* Gestione hover account recenti (Dark Mode) con transizione fluida e contrasto */
+.recent-accounts .list-group-item {
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+[data-theme="dark"] .recent-accounts .list-group-item:hover {
+  background-color: var(--recent-hover-dark, rgba(255, 255, 255, 0.15)) !important;
+  color: #FFFFFF;
+}
+
 /* Modifiche input specifiche per il form di login se necessarie */
 .login-card .form-control {
   padding: 1rem 1.2rem;

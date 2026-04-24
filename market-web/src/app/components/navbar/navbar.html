@@ -38,7 +38,7 @@
              Comprende: Input di testo (mostra/nascondi) + Pulsante icona + Dropdown risultati
              Stato: controllato da isSearchOpen (BehaviorSubject)
         -->
-        <div class="search-wrapper position-relative">
+        <div class="search-wrapper position-relative" *ngIf="isLoggedIn()">
           <div class="d-flex align-items-center gap-2">
             <!-- 
               INPUT RICERCA: 

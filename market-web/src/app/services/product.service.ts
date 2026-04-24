@@ -23,11 +23,11 @@ export class ProductService {
 
   // Array di 5 prodotti predefiniti da mostrare al primo caricamento
   private initialProducts: Product[] = [
-    { id: 1, name: 'Pane Integrale', price: 2.50, description: 'Pane fresco integrale', section: 'alimentari-e-bevande' },
-    { id: 2, name: 'Latte', price: 1.20, description: 'Latte intero fresco', section: 'alimentari-e-bevande' },
-    { id: 3, name: 'Cuffie Bluetooth', price: 150.00, description: 'Cuffie con cancellazione del rumore', section: 'elettronica' },
-    { id: 4, name: 'Maschera Notte', price: 18.00, description: 'Maschera per idratazione durante il riposo', section: 'beauty' },
-    { id: 5, name: 'Lego Star Wars', price: 120.00, description: 'Set di costruzioni spaziali', section: 'giocattoli' }
+    { id: 1, name: 'Pane Integrale', price: 2.50, description: 'Pane fresco integrale', section: 'alimentari-e-bevande', quantity: 10 },
+    { id: 2, name: 'Latte', price: 1.20, description: 'Latte intero fresco', section: 'alimentari-e-bevande', quantity: 20 },
+    { id: 3, name: 'Cuffie Bluetooth', price: 150.00, description: 'Cuffie con cancellazione del rumore', section: 'elettronica', quantity: 5 },
+    { id: 4, name: 'Maschera Notte', price: 18.00, description: 'Maschera per idratazione durante il riposo', section: 'beauty', quantity: 15 },
+    { id: 5, name: 'Lego Star Wars', price: 120.00, description: 'Set di costruzioni spaziali', section: 'giocattoli', quantity: 8 }
   ];
 
   // BehaviorSubject che emette l'array aggiornato di prodotti ogni volta che cambia

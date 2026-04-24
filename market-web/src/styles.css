@@ -37,11 +37,30 @@
   --primary-accent: rgba(41, 151, 255, 0.9);
   --primary-accent-hover: #3E9EFF;
   
+  /* 
+   * Variabile specifica per l'hover dei div in dark mode.
+   * Il colore #3A3A3C garantisce un contrasto adeguato (rapporto > 4.5:1) 
+   * col testo bianco (#FFFFFF) per l'accessibilità (WCAG 2.1).
+   */
+  --div-hover-bg-dark: #3A3A3C;
+  
   /* Glassmorphism scuro */
   --nav-glass-bg: rgba(0, 0, 0, 0.72);
   --nav-text-color: #FFFFFF;
-  --product-hover-bg: #2C2C2E;
+  --product-hover-bg: var(--div-hover-bg-dark);
   --product-hover-text: #FFFFFF;
+
+  /* 
+   * Variabili CSS specifiche per i bottoni in dark mode.
+   * Gestiscono gli stati default, hover, active e disabled mantenendo
+   * l'effetto Apple-style con colori semi-trasparenti e bordi sottili.
+   */
+  --btn-dark-bg: rgba(41, 151, 255, 0.1);
+  --btn-dark-border: rgba(41, 151, 255, 0.3);
+  --btn-dark-text: #66B2FF; /* Azzurro chiaro per contrasto su sfondo scuro */
+  --btn-dark-hover-bg: rgba(41, 151, 255, 0.2); /* Opacità 0.2 per hover (leggera) */
+  --btn-dark-active-bg: rgba(41, 151, 255, 0.3);
+  --btn-dark-disabled-bg: rgba(41, 151, 255, 0.05);
 
   /* Inputs variables dark */
   --input-bg: rgba(28, 28, 30, 0.5); /* Semitrasparente per abilitare il blur */
@@ -116,15 +135,24 @@ app-footer {
   outline-offset: 2px !important;
 }
 
+/* Ottimizzazione performance: applichiamo la transizione fluida (250ms) solo agli elementi interattivi div che necessitano di aggiornamento colore */
+.dropdown-item, .nav-item {
+  /* Transizione fluida 250ms per l'hover in dark mode (come richiesto) */
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
 /* Micro-interactions per card */
 .card {
   border-radius: var(--card-radius) !important;
   border: none;
   background-color: var(--card-bg);
   box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s;
+  /* Transizione 250ms ottimizzata */
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease-in-out, background-color 0.25s ease-in-out, color 0.25s ease-in-out;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  /* Ottimizzazione render hardware */
+  will-change: transform, box-shadow, background-color;
 }
 
 [data-theme="dark"] .card {
@@ -183,7 +211,8 @@ app-footer {
   border-radius: 8px;
   margin: 4px 8px;
   width: calc(100% - 16px);
-  transition: all 0.2s ease;
+  /* Utilizziamo le tempistiche richieste per l'hover */
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
@@ -203,7 +232,9 @@ app-footer {
   background-color: var(--card-bg);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  transition: all 0.3s ease;
+  /* Ottimizzazione performance: limitare transizioni a proprietà specifiche in 250ms */
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease-in-out, background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  will-change: transform, box-shadow, background-color;
 }
 
 [data-theme="dark"] .list-group-item {
@@ -229,29 +260,57 @@ app-footer {
   font-weight: 400;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid transparent;
+}
+
+[data-theme="dark"] .btn {
+  background-color: var(--btn-dark-bg);
+  border-color: var(--btn-dark-border);
+  color: var(--btn-dark-text) !important;
+}
+
+[data-theme="dark"] .btn:hover, [data-theme="dark"] .btn:focus {
+  background-color: var(--btn-dark-hover-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-color: var(--primary-accent);
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .btn:active {
+  background-color: var(--btn-dark-active-bg);
+}
+
+[data-theme="dark"] .btn:disabled {
+  background-color: var(--btn-dark-disabled-bg);
+  color: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(41, 151, 255, 0.1);
 }
 
 .btn-primary {
   background-color: var(--primary-accent);
-  border: none;
+  border: 1px solid rgba(0, 113, 227, 0.3);
   color: #FFFFFF !important;
-  /* Aggiunto blur colorato glow (Apple-like) */
-  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
+  /* Ridotta intensità del glow blu (Apple-like) per maggiore eleganza */
+  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.15);
 }
 
 [data-theme="dark"] .btn-primary {
-  box-shadow: 0 8px 24px rgba(41, 151, 255, 0.4);
+  border: 1px solid rgba(41, 151, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(41, 151, 255, 0.15);
 }
 
 .btn-primary:hover {
   background-color: var(--primary-accent-hover);
+  border: 1px solid rgba(0, 113, 227, 0.5);
   color: #FFFFFF !important;
   transform: scale(1.02);
-  box-shadow: 0 12px 28px rgba(0, 113, 227, 0.6);
+  box-shadow: 0 12px 28px rgba(0, 113, 227, 0.25);
 }
 
 [data-theme="dark"] .btn-primary:hover {
-  box-shadow: 0 12px 28px rgba(41, 151, 255, 0.6);
+  border: 1px solid rgba(41, 151, 255, 0.5);
+  box-shadow: 0 12px 28px rgba(41, 151, 255, 0.25);
 }
 
 .btn-primary:active {
@@ -265,18 +324,36 @@ app-footer {
 }
 
 .btn-danger {
-  background-color: rgba(255, 59, 48, 0.9);
-  color: #fff;
-  border: none;
-  /* Aggiunto blur colorato glow rosso */
-  box-shadow: 0 8px 24px rgba(255, 59, 48, 0.4);
+  /* 
+   * Colore rosso (#E60000) equivalente a #FF0000 ma leggermente scurito
+   * per garantire un contrasto WCAG 2.1 (AA) >= 4.5:1 con il testo bianco.
+   * La leggera trasparenza (0.9) mantiene attivo l'effetto di backdrop-filter (blur).
+   */
+  background-color: rgba(230, 0, 0, 0.9) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(230, 0, 0, 0.3);
+  /* Ridotta intensità del glow rosso per coerenza con il design system */
+  box-shadow: 0 8px 24px rgba(230, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .btn-danger {
+  background-color: rgba(230, 0, 0, 0.9) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 59, 48, 0.3);
 }
 
 .btn-danger:hover {
-  background-color: #ff3b30;
-  color: #fff;
+  background-color: #E60000 !important;
+  border: 1px solid rgba(230, 0, 0, 0.5);
+  color: #FFFFFF !important;
   transform: scale(1.05);
-  box-shadow: 0 12px 28px rgba(255, 59, 48, 0.6);
+  box-shadow: 0 12px 28px rgba(230, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .btn-danger:hover {
+  background-color: #E60000 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 59, 48, 0.5);
 }
 
 .btn-danger:active {

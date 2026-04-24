@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { Router, CanActivateFn } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ModalService } from '../services/modal.service';
+import { I18nService } from '../services/i18n.service';
 
 // Guard (protezione) che blocca l'accesso alle rotte protette se l'utente non è loggato
 // Usato su: /info, /sezione/* (vedi app.routes.ts)
@@ -10,6 +11,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const modalService = inject(ModalService);
+  const i18nService = inject(I18nService);
 
   // Verifica se l'utente è attualmente loggato controllando il servizio
   if (authService.isLoggedIn()) {
@@ -18,7 +20,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
 
   // Se NON loggato, mostra una finestra modale (popup) con il motivo del blocco
-  modalService.showModal('Accesso Negato', 'Devi accedere o creare un account per continuare.');
+  modalService.showModal(
+    i18nService.translate('GUARD.DENIED_TITLE'), 
+    i18nService.translate('GUARD.DENIED_MSG')
+  );
   
   // Blocca l'accesso alla rotta ritornando false. L'utente rimarrà dov'è.
   return false;

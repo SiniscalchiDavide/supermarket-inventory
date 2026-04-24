@@ -19,7 +19,6 @@ export class SearchService {
   // Array statico di tutte le pagine principali del sito (non cambiano mai)
   private pages: SearchResult[] = [
     { type: 'page', id: 1, name: 'Home', route: '/' },
-    { type: 'page', id: 2, name: 'Catalogo', route: '/info' },
     { type: 'page', id: 3, name: 'Alimentari', route: '/sezione/alimentari-e-bevande' },
     { type: 'page', id: 4, name: 'Giocattoli', route: '/sezione/giocattoli' },
     { type: 'page', id: 5, name: 'Elettronica', route: '/sezione/elettronica' },

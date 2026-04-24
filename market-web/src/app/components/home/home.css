@@ -35,7 +35,12 @@
 }
 
 [data-theme="dark"] .btn-accent-blur {
-  box-shadow: 0 10px 30px rgba(41, 151, 255, 0.5);
+  background-color: rgba(41, 151, 255, 0.85); /* Leggera trasparenza per far agire il blur */
+  color: #FFFFFF; /* WCAG Contrast compliant */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Bordo delicato per definire la forma */
+  box-shadow: 0 8px 32px rgba(41, 151, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .btn-accent-blur:hover {
@@ -44,10 +49,21 @@
   box-shadow: 0 15px 40px rgba(0, 113, 227, 0.7);
 }
 
-[data-theme="dark"] .btn-accent-blur:hover {
-  box-shadow: 0 15px 40px rgba(41, 151, 255, 0.7);
+[data-theme="dark"] .btn-accent-blur:hover,
+[data-theme="dark"] .btn-accent-blur:focus {
+  background-color: rgba(62, 158, 255, 0.95);
+  box-shadow: 0 12px 40px rgba(41, 151, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .btn-accent-blur:active {
   transform: scale(0.98);
+}
+
+[data-theme="dark"] .btn-accent-blur:disabled {
+  background-color: rgba(41, 151, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+  border-color: transparent;
+  box-shadow: none;
+  cursor: not-allowed;
 }

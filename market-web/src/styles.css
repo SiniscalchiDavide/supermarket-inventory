@@ -535,3 +535,66 @@ app-footer {
   border-color: transparent;
   box-shadow: none; /* Nella navbar non vogliamo il ring blu del focus sugli input */
 }
+
+/* CSS variables for Beauty theme (available globally when body has .beauty-mode) */
+body.beauty-mode {
+  --beauty-blush: #FADADD;    /* Sfondo principale */
+  --beauty-rose: #C08081;     /* Colore accento / prezzo */
+  --beauty-deep: #6E4142;     /* Testo scuro */
+  --beauty-card: #F9F9F9;     /* Card background */
+  --beauty-gold: #D4AF37;     /* Accent gold */
+}
+
+[data-theme="dark"] body.beauty-mode {
+  --beauty-blush: #1a0f10;    /* Sfondo scuro bordeaux */
+  --beauty-rose: #e09697;     /* Rosa più visibile di notte */
+  --beauty-deep: #f2e1e1;     /* Testo chiaro rosato */
+  --beauty-card: #2d1b1c;     /* Card scuro */
+  --beauty-gold: #D4AF37;
+}
+
+/* --- Beauty page: global overrides for navbar/footer when body has .beauty-mode --- */
+body.beauty-mode .navbar,
+body.beauty-mode app-footer {
+  background: rgba(250, 218, 221, 0.92) !important;
+  color: #6E4142 !important;
+}
+
+body.beauty-mode .navbar .btn-outline-primary,
+body.beauty-mode .navbar .rounded-circle,
+body.beauty-mode [class*="navbar"] .rounded-circle {
+  border-color: var(--beauty-rose) !important;
+  background-color: rgba(192, 128, 129, 0.08) !important;
+  box-shadow: none !important;
+}
+
+body.beauty-mode .navbar i,
+body.beauty-mode .navbar .bi,
+body.beauty-mode [class*="navbar"] i,
+body.beauty-mode [class*="navbar"] .bi {
+  color: var(--beauty-rose) !important;
+}
+
+body.beauty-mode .navbar .btn-outline-primary:hover,
+body.beauty-mode .navbar .rounded-circle:hover {
+  background-color: var(--beauty-rose) !important;
+  border-color: var(--beauty-rose) !important;
+}
+
+body.beauty-mode .navbar .btn-outline-primary:hover i,
+body.beauty-mode .navbar .rounded-circle:hover i {
+  color: #fff !important;
+}
+
+/* Make sure the three filter buttons inside the Beauty page keep the price color in dark mode */
+body.beauty-mode [data-theme="dark"] .d-flex .btn-outline-dark {
+  color: var(--beauty-rose) !important; /* price/pink color */
+  border-color: rgba(224, 163, 181, 0.5) !important;
+}
+
+body.beauty-mode [data-theme="dark"] .d-flex .btn-outline-dark:hover,
+body.beauty-mode [data-theme="dark"] .d-flex .btn-outline-dark:focus {
+  background-color: var(--beauty-rose) !important;
+  color: #1a0f10 !important;
+  border-color: var(--beauty-rose) !important;
+}

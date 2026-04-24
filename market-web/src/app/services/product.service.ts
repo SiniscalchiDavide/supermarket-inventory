@@ -8,6 +8,7 @@ export interface Product {
   price: number;        // Prezzo in euro
   description: string;  // Descrizione dettagliata del prodotto
   section: string;      // Sezione/categoria di appartenenza
+  subsection?: string;   // Sottosezione (opzionale) per ulteriori dettagli di categorizzazione
 }
 
 // Servizio singleton per gestire i prodotti: carica, aggiunge, elimina e persiste in localStorage

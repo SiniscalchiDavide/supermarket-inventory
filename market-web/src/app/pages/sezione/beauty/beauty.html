@@ -7,15 +7,16 @@
     </div>
   </div>
   
-<div class="row mb-4">
+<div class="row mb-5">
   <div class="col-12 text-center">
-    <div class="btn-group shadow-sm" role="group" aria-label="Filtri Beauty">
-      <button type="button" class="btn btn-primary" (click)="filterBy('all')">Tutti</button>
-      <button type="button" class="btn btn-primary" (click)="filterBy('skincare')">Skincare</button>
-      <button type="button" class="btn btn-primary" (click)="filterBy('makeup')">Make-up</button>
+    <div class="d-flex justify-content-center gap-3"> 
+      <button type="button" class="btn btn-outline-dark rounded-pill px-4" (click)="filterBy('all')">Tutti</button>  <!-- Bottoni per diversi filtri --> 
+      <button type="button" class="btn btn-outline-dark rounded-pill px-4" (click)="filterBy('skincare')">Skincare</button>
+      <button type="button" class="btn btn-outline-dark rounded-pill px-4" (click)="filterBy('makeup')">Make-up</button>
     </div>
   </div>
 </div>
+
 
   <!-- Usiamo la pipe 'async' di Angular. "Srotola" i dati dall'Observable products$ 
        e crea una variabile locale chiamata 'products' che è un normale array -->

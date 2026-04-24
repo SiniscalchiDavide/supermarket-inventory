@@ -28,21 +28,13 @@ export class Beauty implements OnInit {
 
   // Viene eseguito automaticamente quando il componente viene inizializzato
   ngOnInit(): void {
-    // Si sottoscrive ai prodotti da productService usando la pipe RxJS
-    this.products$ = this.productService.products$.pipe(
-      map(products => products.filter(p => p.section === 'beauty'))
-    );
-  }
-
-  openPanel(product: Product) {
-    this.sidePanelService.openPanel(product);
-    // MODIFICA: Usiamo combineLatest per unire i prodotti con il filtro scelto
+    // Usiamo combineLatest per unire i prodotti con il filtro scelto
     this.products$ = combineLatest([
       this.productService.products$,
       this.filterSubject.asObservable()
     ]).pipe(
       map(([products, activeFilter]) => {
-        // Prima filtriamo per sezione 'beauty' (logica originale di Kevin)
+        // Prima filtriamo per sezione 'beauty'
         const beautyProducts = products.filter(p => p.section === 'beauty');
         
         // Poi applichiamo la sottosezione se non è 'all'
@@ -50,6 +42,10 @@ export class Beauty implements OnInit {
         return beautyProducts.filter(p => p.subsection === activeFilter);
       })
     );
+  }
+
+  openPanel(product: Product) {
+    this.sidePanelService.openPanel(product);
   }
 
   // AGGIUNTA: La funzione che mancava e che risolve gli errori nell'HTML

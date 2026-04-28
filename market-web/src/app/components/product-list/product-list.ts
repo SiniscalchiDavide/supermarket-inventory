@@ -44,12 +44,13 @@ export class ProductList implements OnInit {
     
     // Crea il form reattivo con validatori su ogni campo
     this.productForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    price: ['', [Validators.required, Validators.min(0.01)]],
-    description: ['', [Validators.required, Validators.minLength(10)]],
-    section: ['', [Validators.required]],
-    quantity: [0, [Validators.min(0)]]
-  });
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: ['', [Validators.required, Validators.min(0.01)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      section: ['', [Validators.required]],
+      subsection: [''], // opzionale: 'skincare' | 'makeup' quando section === 'beauty'
+      quantity: [0, [Validators.min(0)]]
+    });
 
     // Ascolta i query params della rotta (es. productId, scroll)
     // Usato quando si naviga da ricerca a catalogo con prodotto selezionato
@@ -100,6 +101,12 @@ export class ProductList implements OnInit {
     this.productForm.get('section')?.markAsTouched();
   }
 
+  // Seleziona la sottosezione (skincare/makeup) tramite il dropdown personalizzato
+  selezionaSubSection(sub: string) {
+    this.productForm.get('subsection')?.setValue(sub);
+    this.productForm.get('subsection')?.markAsTouched();
+  }
+
   // Seleziona un prodotto dalla lista per mostrare i dettagli a destra
   selezioneProdotto(product: Product) {
     this.selectedProduct = product;
@@ -119,9 +126,12 @@ export class ProductList implements OnInit {
   // Aggiunge un nuovo prodotto dal form (validazione già effettuata)
   aggiungiProdotto() {
     if (this.productForm.valid) {
-      this.productService.addProduct(this.productForm.value);
-      // Pulisci il form per un nuovo inserimento
-      this.productForm.reset();
+      // Assicuriamoci che il payload contenga la proprietà "subsection" anche se vuota
+      const payload = { ...this.productForm.value };
+      this.productService.addProduct(payload);
+
+      // Pulisci il form per un nuovo inserimento e ripristina i valori di default
+      this.productForm.reset({ name: '', price: '', description: '', section: '', subsection: '', quantity: 0 });
       this.sezioneSelezionataText = 'Seleziona una sezione...';
     }
   }

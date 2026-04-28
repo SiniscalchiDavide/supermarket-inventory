@@ -1,58 +1,65 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../../services/product.service';
 import { SidePanelService } from '../../../services/side-panel.service';
-import { Observable, map } from 'rxjs';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
 
-// Componente Beauty: mostra i prodotti della sezione Beauty (prodotti di bellezza)
-// Implementa OnInit per caricare i prodotti al caricamento della pagina
 @Component({
-  selector: 'app-beauty',                     // Selettore: <app-beauty></app-beauty>
-  imports: [CommonModule, TranslatePipe],                   // Importa direttive comuni (*ngFor, *ngIf)
-  templateUrl: './beauty.html',              // Template HTML
-  styleUrl: './beauty.css'                   // Stili CSS specifici
+  selector: 'app-beauty',
+  standalone: true, // Se Kevin usa standalone components
+  imports: [CommonModule, TranslatePipe],
+  templateUrl: './beauty.html',
+  styleUrls: ['./beauty.css']
 })
-export class Beauty implements OnInit {
-  // Inietta il servizio prodotti: qui arrivano tutti i prodotti dal localStorage
+export class Beauty implements OnInit, OnDestroy {
+  // Iniezione dei servizi per dati e pannello laterale
   private productService = inject(ProductService);
   private sidePanelService = inject(SidePanelService);
 
-  // AGGIUNTA: Un "Subject" per gestire il filtro attivo (inizialmente 'all')
+  // Soggetto reattivo per gestire il filtro attuale ('all', 'skincare', 'makeup')
   private filterSubject = new BehaviorSubject<string>('all');
   
-  // Observable che emette un array di prodotti filtrati per questa sezione
-  // Il ! indica che sarà inizializzato in ngOnInit
+  // Observable che emette la lista finale dei prodotti filtrati
   products$!: Observable<Product[]>;
 
-  // Viene eseguito automaticamente quando il componente viene inizializzato
   ngOnInit(): void {
-    // Si sottoscrive ai prodotti da productService usando la pipe RxJS
-    this.products$ = this.productService.products$.pipe(
-      map(products => products.filter(p => p.section === 'beauty'))
-    );
-  }
+    // Aggiungiamo una classe al body per stili globali specifici della pagina Beauty
+    try {
+      document.body.classList.add('beauty-mode');
+    } catch (e) { /* Fallback per ambienti non-DOM */ }
 
-  openPanel(product: Product) {
-    this.sidePanelService.openPanel(product);
-    // MODIFICA: Usiamo combineLatest per unire i prodotti con il filtro scelto
+    // Combiniamo i prodotti del server con il filtro scelto dall'utente
     this.products$ = combineLatest([
       this.productService.products$,
       this.filterSubject.asObservable()
     ]).pipe(
       map(([products, activeFilter]) => {
-        // Prima filtriamo per sezione 'beauty' (logica originale di Kevin)
+        // 1. Filtriamo per la sezione principale 'beauty'
         const beautyProducts = products.filter(p => p.section === 'beauty');
         
-        // Poi applichiamo la sottosezione se non è 'all'
+        // 2. Se il filtro è 'all', mostriamo tutto il reparto beauty
         if (activeFilter === 'all') return beautyProducts;
+        
+        // 3. Altrimenti filtriamo per la sottosezione specifica (coerente con image_34713a.png)
         return beautyProducts.filter(p => p.subsection === activeFilter);
       })
     );
   }
 
-  // AGGIUNTA: La funzione che mancava e che risolve gli errori nell'HTML
+  // Rimuove la classe speciale quando usciamo dalla pagina
+  ngOnDestroy(): void {
+    try {
+      document.body.classList.remove('beauty-mode');
+    } catch (e) { }
+  }
+
+  // Apre il dettaglio prodotto (funzionalità di Kevin)
+  openPanel(product: Product) {
+    this.sidePanelService.openPanel(product);
+  }
+
+  // Funzione chiamata dai bottoni nell'HTML per cambiare categoria
   filterBy(category: string): void {
     this.filterSubject.next(category);
   }

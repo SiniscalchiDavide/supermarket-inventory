@@ -15,7 +15,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
     <div class="side-panel-backdrop" *ngIf="product$ | async as product" (click)="close()">
       
       <!-- Pannello vero e proprio che scorre da destra. 'stopPropagation' impedisce che il click qui chiuda il pannello -->
-      <div class="side-panel" (click)="$event.stopPropagation()" [ngClass]="{'dark-panel': isDark()}">
+      <div class="side-panel" (click)="$event.stopPropagation()" [ngClass]="{'dark-panel': isDark(), 'beauty-panel': isBeauty()}">
         
         <!-- Intestazione con titolo e pulsante X di chiusura -->
         <div class="side-panel-header">
@@ -97,6 +97,25 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
       color: white;
       box-shadow: -10px 0 30px rgba(0,0,0,0.5);
     }
+
+    /* --- Beauty specific styling for the side panel --- */
+    .beauty-panel {
+      background: linear-gradient(180deg, var(--beauty-card, #fff), var(--beauty-blush, #FADADD));
+      color: var(--beauty-deep, #6E4142);
+      box-shadow: -10px 0 40px rgba(110, 65, 66, 0.12);
+    }
+    .beauty-panel .side-panel-header {
+      border-bottom: 1px solid rgba(192, 128, 129, 0.08);
+    }
+    .beauty-panel .product-image-placeholder {
+      background: linear-gradient(135deg, #fdf2f4 0%, #f6e9eb 100%);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+    }
+    .beauty-panel .text-primary-accent {
+      color: var(--beauty-rose, #C08081) !important;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
     .side-panel-header {
       padding: 25px 30px;
       border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -154,5 +173,14 @@ export class SidePanelComponent {
   // Helper per controllare se applicare le classi CSS del tema scuro
   isDark() {
     return this.themeService.isDarkMode();
+  }
+
+  // Helper per verificare se la pagina corrente è in Beauty-mode (aggiunge la classe sul body)
+  isBeauty() {
+    try {
+      return document.body.classList.contains('beauty-mode');
+    } catch (e) {
+      return false;
+    }
   }
 }

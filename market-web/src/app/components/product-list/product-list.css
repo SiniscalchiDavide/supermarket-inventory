@@ -27,7 +27,7 @@
 /* Custom styling per arrotondare e sfocare il contenitore del select */
 [data-theme="dark"] .custom-dropdown-wrapper .btn-dropdown-select:focus,
 [data-theme="dark"] .custom-dropdown-wrapper .btn-dropdown-select[aria-expanded="true"] {
-  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.3);
+  box-shadow: 0 0 0 3px rgb(255, 255, 255);
 }
 
 .custom-dropdown-wrapper .dropdown-menu {
@@ -62,8 +62,31 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
+.btn-success-custom,
+.btn-success-custom * {
+color: #fff !important;
+}
+.btn-success-custom:focus,
+.btn-success-custom:active,
+.btn-success-custom:focus *,
+.btn-success-custom:active * {
+color: #fff !important;
+text-decoration: none !important;
+}
+
+.btn-success-custom:disabled,
+.btn-success-custom[disabled],
+.btn-success-custom:disabled:hover,
+.btn-success-custom[disabled]:hover {
+background-color: rgba(33, 128, 48, 0.555) !important;
+color: #fff !important;
+opacity: 0.95 !important;
+box-shadow: 0 8px 24px rgba(40,205,65,0.35) !important;
+transform: none !important;
+cursor: not-allowed !important;
+}
 .btn-success-custom:hover {
-  background-color: #28cd41;
+  background-color: #28cd4197;
   transform: scale(1.02);
   box-shadow: 0 12px 28px rgba(40, 205, 65, 0.6);
 }

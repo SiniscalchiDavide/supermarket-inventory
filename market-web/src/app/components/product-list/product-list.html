@@ -54,28 +54,54 @@
             <div class="invalid-feedback">{{ 'CATALOG.DESC_REQ' | translate }}</div>
           </div>
           
-          <div class="mb-4">
-            <label class="form-label d-block">{{ 'CATALOG.SECTION' | translate }}</label>
-            <div class="dropdown custom-dropdown-wrapper" [class.is-invalid-dropdown]="productForm.get('section')?.invalid && productForm.get('section')?.touched">
-              <button class="btn btn-dropdown-select w-100 d-flex justify-content-between align-items-center" 
-                      type="button" 
-                      id="sectionDropdown" 
-                      data-bs-toggle="dropdown" 
-                      aria-expanded="false"
-                      [class.text-muted]="productForm.get('section')?.value === '' || productForm.get('section')?.value === null">
-                <span>{{ (productForm.get('section')?.value ? 'SECTIONS.' + (productForm.get('section')?.value === 'alimentari-e-bevande' ? 'ALIMENTARI' : productForm.get('section')?.value.toUpperCase().replace('-', '_')) : 'CATALOG.SECTION_SELECT') | translate }}</span>
-                <i class="bi bi-chevron-down text-muted" style="font-size: 0.8rem;"></i>
-              </button>
-              <ul class="dropdown-menu w-100 shadow-sm" aria-labelledby="sectionDropdown">
-                <li *ngFor="let sezione of sezioni">
-                  <a class="dropdown-item" href="#" (click)="$event.preventDefault(); selezionaSezioneDalDropdown(sezione)">
-                    {{ 'SECTIONS.' + sezione.toUpperCase() | translate }}
-                  </a>
-                </li>
-              </ul>
+          <div class="row g-2 mb-4">
+            <div class="col-md-6">
+              <label class="form-label d-block">{{ 'CATALOG.SECTION' | translate }}</label>
+              <div class="dropdown custom-dropdown-wrapper" [class.is-invalid-dropdown]="productForm.get('section')?.invalid && productForm.get('section')?.touched">
+                <button class="btn btn-dropdown-select w-100 d-flex justify-content-between align-items-center" 
+                        type="button" 
+                        id="sectionDropdown" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"
+                        [class.text-muted]="productForm.get('section')?.value === '' || productForm.get('section')?.value === null">
+                  <span>{{ (productForm.get('section')?.value ? 'SECTIONS.' + (productForm.get('section')?.value === 'alimentari-e-bevande' ? 'ALIMENTARI' : productForm.get('section')?.value.toUpperCase().replace('-', '_')) : 'CATALOG.SECTION_SELECT') | translate }}</span>
+                  <i class="bi bi-chevron-down text-muted" style="font-size: 0.8rem;"></i>
+                </button>
+                <ul class="dropdown-menu w-100 shadow-sm" aria-labelledby="sectionDropdown">
+                  <li *ngFor="let sezione of sezioni">
+                    <a class="dropdown-item" href="#" (click)="$event.preventDefault(); selezionaSezioneDalDropdown(sezione)">
+                      {{ 'SECTIONS.' + sezione.toUpperCase() | translate }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="text-danger small mt-1" *ngIf="productForm.get('section')?.invalid && productForm.get('section')?.touched">
+                {{ 'CATALOG.SECTION_REQ' | translate }}
+              </div>
             </div>
-            <div class="text-danger small mt-1" *ngIf="productForm.get('section')?.invalid && productForm.get('section')?.touched">
-              {{ 'CATALOG.SECTION_REQ' | translate }}
+
+            <div class="col-md-6" *ngIf="productForm.get('section')?.value === 'beauty'">
+              <label class="form-label">Tipo di Prodotto Beauty</label>
+
+              <div class="dropdown custom-dropdown-wrapper">
+                <button class="btn btn-dropdown-select w-100 d-flex justify-content-between align-items-center"
+                        type="button"
+                        id="subsectionDropdown"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        [class.text-muted]="!productForm.get('subsection')?.value">
+                  <span>{{ productForm.get('subsection')?.value ? (productForm.get('subsection')?.value === 'skincare' ? 'Skincare' : 'Make-up') : 'Scegli tipo' }}</span>
+                  <i class="bi bi-chevron-down text-muted" style="font-size: 0.8rem;"></i>
+                </button>
+                <ul class="dropdown-menu w-100 shadow-sm" aria-labelledby="subsectionDropdown">
+                  <li>
+                    <a class="dropdown-item" href="#" (click)="$event.preventDefault(); selezionaSubSection('skincare')">Skincare</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" (click)="$event.preventDefault(); selezionaSubSection('makeup')">Make-up</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           

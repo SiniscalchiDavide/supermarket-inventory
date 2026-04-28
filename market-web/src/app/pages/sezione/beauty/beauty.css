@@ -1,18 +1,143 @@
-.empty-state-card {
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 2px dashed var(--input-border);
-  background-color: transparent !important;
-  box-shadow: none !important;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+
+:host {
+  /* --- PALETTE CHIARA --- */
+  --beauty-blush: #FADADD;
+  --beauty-rose: #C08081;
+  --beauty-deep: #6E4142;
+  --beauty-card: #F9F9F9;
+  --beauty-gold: #D4AF37;
+
+  display: block;
+  background: var(--beauty-blush) no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 3rem 0;
 }
 
-[data-theme="dark"] .empty-state-card {
-  border-color: rgba(255, 255, 255, 0.1);
+/* --- CONFIGURAZIONE DARK MODE --- */
+[data-theme="dark"] :host {
+  --beauty-blush: #1a0f10;
+  --beauty-rose: #e09697;
+  --beauty-deep: #f2e1e1;
+  --beauty-card: #2d1b1c;
+  background: linear-gradient(180deg, #1a0f10, #2d1b1c) !important;
+}
+
+/* --- TIPOGRAFIA E TITOLI --- */
+h2.display-4 {
+  font-family: 'Playfair Display', serif;
+  color: var(--beauty-deep);
+}
+
+/* --- BOTTONI FILTRO (Pill-shaped) --- */
+.btn-outline-dark {
+  border-color: var(--beauty-rose) !important;
+  color: var(--beauty-rose) !important;
+  border-radius: 50px;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--beauty-rose) !important;
+  color: #fff !important;
+}
+
+/* --- CARD PRODOTTI --- */
+.card {
+  background: var(--beauty-card);
+  border-radius: 15px;
+  border: 1px solid rgba(192,128,129,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  color: var(--beauty-deep);
 }
 
 .text-primary-accent {
-  color: var(--primary-accent);
+  color: var(--beauty-rose) !important;
+  font-weight: 700;
+}
+
+.card::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--beauty-gold);
+  margin-bottom: 15px;
+}
+
+/* --- IL FIX PER LA NAVBAR BLU --- */
+/* ::ng-deep rompe le barriere tra componenti per forzare il rosa */
+::ng-deep .navbar .rounded-circle, 
+::ng-deep .navbar .btn-outline-primary {
+  border-color: var(--beauty-rose) !important;
+  background-color: rgba(192, 128, 129, 0.1) !important;
+}
+
+::ng-deep .navbar i, 
+::ng-deep .navbar .bi {
+  color: var(--beauty-rose) !important; /* Lente, Luna e Mondo diventano rosa */
+}
+
+::ng-deep .navbar .btn-outline-primary:hover {
+  background-color: var(--beauty-rose) !important;
+}
+
+::ng-deep .navbar .btn-outline-primary:hover i {
+  color: white !important;
+}
+
+/* --- COORDINAMENTO SIDE PANEL (DETTAGLI PRODOTTO) --- */
+
+/* Sfondo del pannello in modalità Light */
+::ng-deep .side-panel-container {
+  background-color: var(--beauty-card) !important;
+  color: var(--beauty-deep) !important;
+}
+
+/* Sfondo del pannello in modalità Night */
+[data-theme="dark"] ::ng-deep .side-panel-container {
+  background-color: var(--beauty-card) !important; /* Qui usa il bordeaux scuro che abbiamo definito */
+  color: var(--beauty-deep) !important;
+}
+
+/* Colore del Titolo e del Prezzo nel Pannello */
+::ng-deep .side-panel-container h2,
+::ng-deep .side-panel-container .h3 {
+  font-family: 'Playfair Display', serif !important;
+  color: var(--beauty-deep) !important;
+}
+
+/* Icone di spunta (check) verdi: rendiamole Rosa o Oro per eleganza */
+::ng-deep .side-panel-container .bi-check-circle-fill {
+  color: var(--beauty-rose) !important;
+}
+
+/* Pulsante di chiusura (X) */
+::ng-deep .side-panel-container .btn-close {
+  filter: sepia(1) saturate(5) hue-rotate(310deg) !important; /* Rende la X rosata */
+}
+
+/* --- FIX FINALI: SEARCH BAR & DROPDOWN LANG --- */
+
+/* Rimuove il bordo blu quando si clicca nella barra di ricerca (Focus) */
+::ng-deep .search-overlay-global input:focus,
+::ng-deep .navbar input:focus {
+  border-color: var(--beauty-rose) !important;
+  box-shadow: 0 0 0 0.25rem rgba(192, 128, 129, 0.25) !important; /* Glow rosato invece di blu */
+}
+
+/* Fix per l'hover nel menu a tendina della lingua (Light Mode) */
+::ng-deep .dropdown-menu .dropdown-item:hover,
+::ng-deep .dropdown-menu .dropdown-item:focus {
+  background-color: var(--beauty-rose) !important; /* Sfondo rosa invece di blu */
+  color: white !important;
+}
+
+/* Se vuoi cambiare anche il colore della lingua selezionata (quella con la spunta) */
+::ng-deep .dropdown-menu .dropdown-item.active,
+::ng-deep .dropdown-menu .dropdown-item:active {
+  background-color: var(--beauty-deep) !important;
+  color: white !important;
 }
